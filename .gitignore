@@ -26,6 +26,9 @@ config/initializers/secret_token.rb
 # TODO Comment out this rule if environment variables can be committed
 .env
 
+## Database configuration
+/config/database.yml
+
 ## Environment normalization:
 /.bundle
 /vendor/bundle
