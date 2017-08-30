@@ -22,11 +22,17 @@ gem 'puma', '~> 3.7'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
+# OAuth2 Provider
+gem 'doorkeeper'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem 'rack-cors'
+gem 'rack-cors', require: 'rack/cors'
 gem 'grape', '>= 1.0.0'
 gem 'grape-active_model_serializers'
+gem 'devise'
+gem 'faker'
+gem 'grape-swagger'
+gem 'grape-swagger-rails'
+gem 'virtus'
 
 
 group :development, :test do
