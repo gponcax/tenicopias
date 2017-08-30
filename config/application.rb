@@ -5,11 +5,11 @@ require "rails"
 require "active_model/railtie"
 require "active_job/railtie"
 require "active_record/railtie"
-require "action_controller/railtie"
+# require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
 # require "action_cable/engine"
-# require "sprockets/railtie"
+require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -29,5 +29,9 @@ module Tenicopias
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
+    config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
+    config.autoload_paths += %W(#{config.root}/app/services)
   end
 end

@@ -1,4 +1,4 @@
-module Client
+module CMS
   module V1
     class Base < Grape::API
       content_type :json, 'application/json'
