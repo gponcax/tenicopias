@@ -7,6 +7,7 @@ module CMS
       helpers Doorkeeper::Grape::Helpers, CurrentResourceOwnerHelper
 
       mount CMS::V1::Admins
+      mount CMS::V1::Teachers
       mount CMS::V1::Oauth
 
       add_swagger_documentation mount_path: '/swagger_doc',

@@ -1,7 +1,7 @@
 module CMS
-  module Admins
+  module Teachers
     class Update < ::BaseService
-      ERROR_TITLE = 'Admin Error'.freeze
+      ERROR_TITLE = 'Teachers Error'.freeze
 
       attribute :id, Integer, writer: :private
 
@@ -20,7 +20,7 @@ module CMS
         )
       rescue ActiveRecord::RecordInvalid => e
         return error(response: e.record, title: ERROR_TITLE, code: 422,
-                     message: 'Admin could not be updated', errors: e.record.errors)
+                     message: 'Teacher could not be updated', errors: e.record.errors)
       rescue => e
         return error(reponse: e, title: ERROR_TITLE, message: e.message, code: 422)
       end

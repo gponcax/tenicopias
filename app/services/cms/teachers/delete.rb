@@ -1,13 +1,12 @@
 module CMS
-  module Admins
-    class Update < ::BaseService
-      ERROR_TITLE = 'Admin Error'.freeze
+  module Teachers
+    class Delete < ::BaseService
+      ERROR_TITLE = 'Teacher Error'.freeze
 
       attribute :id, Integer, writer: :private
 
-      def initialize(params = {})
-        self.id = params[:id]
-        self.params = params.except(:id)
+      def initialize(id)
+        self.id = id
       end
 
       def call
@@ -16,11 +15,11 @@ module CMS
         return error(result) unless result.succeed?
 
         success(
-          result.response.update!(params)
+          result.response.destroy!
         )
       rescue ActiveRecord::RecordInvalid => e
         return error(response: e.record, title: ERROR_TITLE, code: 422,
-                     message: 'Admin could not be updated', errors: e.record.errors)
+                     message: 'Teacher could not be deleted', errors: e.record.errors)
       rescue => e
         return error(reponse: e, title: ERROR_TITLE, message: e.message, code: 422)
       end
