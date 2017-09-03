@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  devise_for :teachers
   scope 'v1' do
     use_doorkeeper do
       skip_controllers :applications, :authorized_applications, :authorizations

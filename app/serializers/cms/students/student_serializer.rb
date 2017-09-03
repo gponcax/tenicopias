@@ -1,7 +1,7 @@
 module CMS
-  module Teachers
-    class TeacherSerializer < ActiveModel::Serializer
-      attributes :id, :name, :email, :birthdate, :phone, :created_at
+  module Students
+    class StudentSerializer < ActiveModel::Serializer
+      attributes :id, :name, :email, :birthdate, :gender, :phone, :created_at
 
       def created_at
         object.created_at.iso8601

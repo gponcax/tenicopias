@@ -1,7 +1,7 @@
 module CMS
-  module Teachers
+  module Students
     class Update < ::BaseService
-      ERROR_TITLE = 'Teacher Error'.freeze
+      ERROR_TITLE = 'Student Error'.freeze
 
       attribute :id, Integer, writer: :private
 
@@ -11,7 +11,7 @@ module CMS
       end
 
       def call
-        result = ::CMS::Teachers::Find.call(id)
+        result = ::CMS::Students::Find.call(id)
 
         return error(result) unless result.succeed?
 
@@ -20,7 +20,7 @@ module CMS
         )
       rescue ActiveRecord::RecordInvalid => e
         return error(response: e.record, title: ERROR_TITLE, code: 422,
-                     message: 'Teacher could not be updated', errors: e.record.errors)
+                     message: 'Student could not be updated', errors: e.record.errors)
       rescue => e
         return error(reponse: e, title: ERROR_TITLE, message: e.message, code: 422)
       end

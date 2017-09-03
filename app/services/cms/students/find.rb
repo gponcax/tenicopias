@@ -1,5 +1,5 @@
 module CMS
-  module Teachers
+  module Students
     class Find < ::BaseService
       ERROR_TITLE = 'Teacher Error'.freeze
 
@@ -10,12 +10,12 @@ module CMS
       end
 
       def call
-        result = Teacher.find_by(id: id)
+        result = Student.find_by(id: id)
 
         return error(
           title: ERROR_TITLE,
           code: 404,
-          message: 'Teacher not found'
+          message: 'Student not found'
         ) unless result
 
         success(result)

@@ -1,16 +1,17 @@
 module CMS
   module V1
-    class Teachers < Base
-      namespace :teachers do
+    class Students < Base
+      namespace :students do
         before do
           doorkeeper_authorize! :admin
         end
 
-        desc 'Create Teacher'
+        desc 'Create Student'
         params do
           requires :name, allow_blank: false, type: String
           requires :email, allow_blank: false, regexp: Devise::email_regexp, type: String
           requires :phone, allow_blank: false, type: String
+          requires :gender, allow_blank: false, type: String, values: ['M', 'F']
           optional :birthdate, allow_blank: false, type: Date
           requires :password, allow_blank: false, type: String,
                    documentation: { type: 'password' }
@@ -19,10 +20,10 @@ module CMS
                      documentation: { type: 'password' }
           end
         end
-        post serializer: ::CMS::Teachers::TeacherSerializer do
+        post serializer: ::CMS::Students::StudentSerializer do
           status 201
 
-          result = ::CMS::Teachers::Create.call(params)
+          result = ::CMS::Students::Create.call(params)
 
           if result.succeed?
             result.response
@@ -31,15 +32,15 @@ module CMS
           end
         end
 
-        desc 'Teacher List'
-        get each_serializer: ::CMS::Teachers::TeacherSerializer do
-          Teacher.all
+        desc 'Student List'
+        get each_serializer: ::CMS::Students::StudentSerializer do
+          Student.all
         end
 
         route_param :id, type: Integer, allow_blank: false do
-          desc 'Teacher Detail'
-          get serializer: ::CMS::Teachers::TeacherSerializer do
-            result = ::CMS::Teachers::Find.call(params[:id])
+          desc 'Student Detail'
+          get serializer: ::CMS::Students::StudentSerializer do
+            result = ::CMS::Students::Find.call(params[:id])
 
             if result.succeed?
               result.response
@@ -48,11 +49,12 @@ module CMS
             end
           end
 
-          desc 'Update Teacher'
+          desc 'Update Student'
           params do
             optional :name, allow_blank: false, type: String
             optional :email, allow_blank: false, regexp: Devise::email_regexp, type: String
             optional :phone, allow_blank: false, type: String
+            optional :gender, allow_blank: false, type: String, values: ['M', 'F']
             optional :birthdate, allow_blank: false, type: Date
             optional :password, allow_blank: false, type: String,
                      documentation: { type: 'password', required: false }
@@ -64,17 +66,17 @@ module CMS
           put do
             status 204
 
-            result = ::CMS::Teachers::Update.call(params)
+            result = ::CMS::Students::Update.call(params)
 
             error!({ message: result.message, errors: result.errors },
                    result.code) unless result.succeed?
           end
 
-          desc 'Delete Teacher'
+          desc 'Delete Student'
           delete do
             status 204
 
-            result = ::CMS::Teachers::Delete.call(params[:id])
+            result = ::CMS::Students::Delete.call(params[:id])
 
             error!({ message: result.message, errors: result.errors },
                    result.code) unless result.succeed?
