@@ -8,8 +8,10 @@ module CMS
 
       mount CMS::V1::Admins
       mount CMS::V1::Teachers
+      mount CMS::V1::Students
       mount CMS::V1::Oauth
       mount CMS::V1::Printers
+
 
       add_swagger_documentation mount_path: '/swagger_doc',
                                 base_path: '/',

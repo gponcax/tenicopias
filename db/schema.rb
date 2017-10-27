@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009061549) do
+ActiveRecord::Schema.define(version: 20171027051755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,15 @@ ActiveRecord::Schema.define(version: 20171009061549) do
     t.inet "last_sign_in_ip"
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "docs", force: :cascade do |t|
+    t.integer "doctionable_id"
+    t.string "doctionable_type"
+    t.string "transaction_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["doctionable_type", "doctionable_id"], name: "idx_docs_on_doctionable_type_doctionable"
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -91,6 +100,25 @@ ActiveRecord::Schema.define(version: 20171009061549) do
     t.inet "last_sign_in_ip"
     t.index ["email"], name: "index_printers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_printers_on_reset_password_token", unique: true
+  end
+
+  create_table "students", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.date "birthdate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.index ["email"], name: "index_students_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true
   end
 
   create_table "teachers", force: :cascade do |t|

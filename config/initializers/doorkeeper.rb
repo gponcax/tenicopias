@@ -1,6 +1,10 @@
 Doorkeeper.configure do
   # Change the ORM that doorkeeper will use (needs plugins)
   orm :active_record
+  ADMIN = 'admin'.freeze
+  TEACHER = 'teacher'.freeze
+  PRINTER = 'printer'.freeze
+  STUDENT = 'student'.freeze
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
@@ -11,9 +15,18 @@ Doorkeeper.configure do
   end
 
   resource_owner_from_credentials do |routes|
-    resource_instance = if params[:scope] == 'admin'
-                          Admin.find_for_database_authentication(email: params[:email])
-                        end
+    # resource_instance = if params[:scope] == 'admin'
+    #                       Admin.find_for_database_authentication(email: params[:email])
+    #                     end
+
+    resource_instance  =  case params[:scope]
+                          when ADMIN
+                             Admin.find_for_database_authentication(email: params[:email])
+                          when TEACHER
+                             Teacher.find_for_database_authentication(email: params[:email])
+                          when PRINTER
+                             Printer.find_for_database_authentication(email: params[:email])
+                          end
 
     if resource_instance && resource_instance.valid_for_authentication? {
       resource_instance.valid_password?(params[:password])
