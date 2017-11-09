@@ -4,6 +4,8 @@ class CreatedDocs < ActiveRecord::Migration[5.1]
       t.integer :doctionable_id
       t.string  :doctionable_type
       t.string :transaction_id
+      t.string :description
+      t.string :name
       t.timestamps
     end
     add_index :docs, [:doctionable_type, :doctionable_id],

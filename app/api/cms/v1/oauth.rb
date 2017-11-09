@@ -19,7 +19,7 @@ module CMS
           requires :scope,
                    type: String,
                    allow_blank: false,
-                   values: %w(admin)
+                   values: %w(super_admin admin)
         end
         post :token do
         end

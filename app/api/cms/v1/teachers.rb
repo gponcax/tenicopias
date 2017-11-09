@@ -20,7 +20,6 @@ module CMS
         end
         post serializer: ::CMS::Teachers::TeacherSerializer do
           status 201
-
           result = ::CMS::Teachers::Create.call(params)
 
           if result.succeed?

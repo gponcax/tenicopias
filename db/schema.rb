@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171027051755) do
+ActiveRecord::Schema.define(version: 20171029052817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,10 +34,16 @@ ActiveRecord::Schema.define(version: 20171027051755) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
+  create_table "courses", force: :cascade do |t|
+    t.string "name"
+  end
+
   create_table "docs", force: :cascade do |t|
     t.integer "doctionable_id"
     t.string "doctionable_type"
     t.string "transaction_id"
+    t.string "description"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["doctionable_type", "doctionable_id"], name: "idx_docs_on_doctionable_type_doctionable"
@@ -121,6 +127,15 @@ ActiveRecord::Schema.define(version: 20171027051755) do
     t.index ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true
   end
 
+  create_table "study_courses", force: :cascade do |t|
+    t.bigint "student_id"
+    t.bigint "teacher_id"
+    t.bigint "course_id"
+    t.index ["course_id"], name: "index_study_courses_on_course_id"
+    t.index ["student_id"], name: "index_study_courses_on_student_id"
+    t.index ["teacher_id"], name: "index_study_courses_on_teacher_id"
+  end
+
   create_table "teachers", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
@@ -143,4 +158,7 @@ ActiveRecord::Schema.define(version: 20171027051755) do
 
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "study_courses", "courses"
+  add_foreign_key "study_courses", "students"
+  add_foreign_key "study_courses", "teachers"
 end
