@@ -10,15 +10,15 @@ module CMS
       end
 
       def call
-        admin = Teacher.find_by(id: id)
+        result = Teacher.find_by(id: id)
 
         return error(
           title: ERROR_TITLE,
           code: 404,
           message: 'Teacher not found'
-        ) unless admin
+        ) unless result
 
-        success(admin)
+        success(result)
       rescue => e
         return error(reponse: e, title: ERROR_TITLE, message: e.message, code: 422)
       end

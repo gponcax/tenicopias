@@ -1,7 +1,7 @@
 module CMS
   module Teachers
     class Update < ::BaseService
-      ERROR_TITLE = 'Teachers Error'.freeze
+      ERROR_TITLE = 'Teacher Error'.freeze
 
       attribute :id, Integer, writer: :private
 

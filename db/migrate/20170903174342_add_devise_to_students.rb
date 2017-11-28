@@ -1,5 +1,5 @@
 class AddDeviseToStudents < ActiveRecord::Migration[5.1]
- def self.up
+  def self.up
     change_table :students do |t|
       ## Database authenticatable
       # t.string :email,              null: false, default: ""
@@ -35,7 +35,7 @@ class AddDeviseToStudents < ActiveRecord::Migration[5.1]
       # t.timestamps null: false
     end
 
-    # add_index :students, :email,                unique: true
+    add_index :students, :email,                unique: true
     add_index :students, :reset_password_token, unique: true
     # add_index :students, :confirmation_token,   unique: true
     # add_index :students, :unlock_token,         unique: true

@@ -10,7 +10,8 @@ module CMS
         params do
           requires :name, allow_blank: false, type: String
           requires :email, allow_blank: false, regexp: Devise::email_regexp, type: String
-          optional :phone, allow_blank: false, type: String
+          requires :phone, allow_blank: false, type: String
+          optional :birthdate, allow_blank: false, type: Date
           requires :password, allow_blank: false, type: String,
                    documentation: { type: 'password' }
           given :password do
@@ -51,6 +52,7 @@ module CMS
             optional :name, allow_blank: false, type: String
             optional :email, allow_blank: false, regexp: Devise::email_regexp, type: String
             optional :phone, allow_blank: false, type: String
+            optional :birthdate, allow_blank: false, type: Date
             optional :password, allow_blank: false, type: String,
                      documentation: { type: 'password', required: false }
             given :password do
