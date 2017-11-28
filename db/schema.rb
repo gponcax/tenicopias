@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171119225818) do
+ActiveRecord::Schema.define(version: 20171126222032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,9 @@ ActiveRecord::Schema.define(version: 20171119225818) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "docs", force: :cascade do |t|
@@ -52,6 +55,12 @@ ActiveRecord::Schema.define(version: 20171119225818) do
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "course_id"
+    t.bigint "teacher_id"
+    t.index ["course_id"], name: "index_groups_on_course_id"
+    t.index ["teacher_id"], name: "index_groups_on_teacher_id"
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -97,7 +106,7 @@ ActiveRecord::Schema.define(version: 20171119225818) do
   create_table "printers", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
-    t.date "birthdate"
+    t.date "birthday"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "encrypted_password", default: "", null: false
@@ -116,7 +125,8 @@ ActiveRecord::Schema.define(version: 20171119225818) do
   create_table "students", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
-    t.date "birthdate"
+    t.date "birthday"
+    t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "encrypted_password", default: "", null: false
@@ -128,23 +138,17 @@ ActiveRecord::Schema.define(version: 20171119225818) do
     t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
+    t.bigint "group_id"
     t.index ["email"], name: "index_students_on_email", unique: true
+    t.index ["group_id"], name: "index_students_on_group_id"
     t.index ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true
-  end
-
-  create_table "study_courses", force: :cascade do |t|
-    t.bigint "student_id"
-    t.bigint "teacher_id"
-    t.bigint "course_id"
-    t.index ["course_id"], name: "index_study_courses_on_course_id"
-    t.index ["student_id"], name: "index_study_courses_on_student_id"
-    t.index ["teacher_id"], name: "index_study_courses_on_teacher_id"
   end
 
   create_table "teachers", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
-    t.date "birthdate"
+    t.date "birthday"
+    t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "encrypted_password", default: "", null: false
@@ -156,14 +160,13 @@ ActiveRecord::Schema.define(version: 20171119225818) do
     t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
-    t.string "phone"
     t.index ["email"], name: "index_teachers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "groups", "courses"
+  add_foreign_key "groups", "teachers"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
-  add_foreign_key "study_courses", "courses"
-  add_foreign_key "study_courses", "students"
-  add_foreign_key "study_courses", "teachers"
+  add_foreign_key "students", "groups"
 end
