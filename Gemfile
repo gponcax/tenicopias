@@ -33,6 +33,7 @@ gem 'faker'
 gem 'grape-swagger'
 gem 'grape-swagger-rails'
 gem 'virtus'
+gem 'carrierwave', '~> 1.0'
 
 
 group :development, :test do
