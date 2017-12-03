@@ -1,4 +1,4 @@
 class Doc < ApplicationRecord
-  mount_uploaders :docs, DocUploader
+  mount_uploader :document, DocUploader
   belongs_to :group
 end
