@@ -1,3 +1,4 @@
 class Doc < ApplicationRecord
-  belongs_to :doctionable, polymorphic: true, optional: true
+  mount_uploaders :docs, DocUploader
+  belongs_to :group
 end

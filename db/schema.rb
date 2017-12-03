@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171126222032) do
+ActiveRecord::Schema.define(version: 20171203005840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,14 +42,13 @@ ActiveRecord::Schema.define(version: 20171126222032) do
   end
 
   create_table "docs", force: :cascade do |t|
-    t.integer "doctionable_id"
-    t.string "doctionable_type"
-    t.string "transaction_id"
     t.string "description"
     t.string "name"
+    t.string "document"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["doctionable_type", "doctionable_id"], name: "idx_docs_on_doctionable_type_doctionable"
+    t.bigint "group_id"
+    t.index ["group_id"], name: "index_docs_on_group_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -145,6 +144,7 @@ ActiveRecord::Schema.define(version: 20171126222032) do
     t.index ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "docs", "groups"
   add_foreign_key "groups", "courses"
   add_foreign_key "groups", "teachers"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
