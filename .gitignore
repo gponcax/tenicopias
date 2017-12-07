@@ -167,3 +167,6 @@ fabric.properties
 .idea/sonarlint
 
 # End of https://www.gitignore.io/api/ruby,rails,rubymine
+
+# Ignore application configuration
+/config/application.yml

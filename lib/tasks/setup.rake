@@ -18,7 +18,11 @@ namespace :setup do
                       password: 'welcome123'
                     })
 
-
+      teacher=  Printer.create!({
+                      name: Faker::Name.name,
+                      email: Faker::Internet.email,
+                      password: 'welcome123'
+                    })
       group = course.groups.create!({
           name: Faker::Educator.course,
           description: Faker::Educator.campus,

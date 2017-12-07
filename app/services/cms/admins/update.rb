@@ -11,7 +11,7 @@ module CMS
       end
 
       def call
-        result = ::CMS::Teachers::Find.call(id)
+        result = ::CMS::Admins::Find.call(id)
 
         return error(result) unless result.succeed?
 

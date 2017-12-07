@@ -62,7 +62,7 @@ module CMS
           put do
             status 204
 
-            result = ::CMS::Teachers::Update.call(params)
+            result = ::CMS::Admins::Update.call(params)
 
             error!({ message: result.message, errors: result.errors },
                    result.code) unless result.succeed?
