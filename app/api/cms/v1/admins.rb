@@ -6,8 +6,6 @@ module CMS
           doorkeeper_authorize! :admin
         end
 
-        desc 'Login'
-
         desc 'Create Admin'
         params do
           requires :name, allow_blank: false, type: String
