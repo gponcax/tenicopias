@@ -32,8 +32,11 @@ module Tecnicopias
           end
 
           desc 'Student List'
+          params do
+            use :pagination
+          end
           get each_serializer: ::CMS::Students::StudentSerializer do
-            Student.all
+            paginate Student.page(params[:page]).per(params[:per_page])
           end
 
           route_param :id, type: Integer, allow_blank: false do

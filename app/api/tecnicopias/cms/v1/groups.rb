@@ -7,7 +7,15 @@ module Tecnicopias
             doorkeeper_authorize! :admin
           end
 
-          desc 'Login'
+          desc 'Group List'
+          params do
+            use :pagination
+          end
+
+          get each_serializer: ::CMS::Groups::GroupSerializer do
+            paginate  Group.page(params[:page]).per(params[:per_page])
+          end
+
 
           desc 'Create Group'
           params do
@@ -56,10 +64,6 @@ module Tecnicopias
                 end
               end
             end
-          end
-          desc 'Group List'
-          get each_serializer: ::CMS::Groups::GroupSerializer do
-            Group.all
           end
 
           route_param :id, type: Integer, allow_blank: false, requirements: { id: /[0-9]*/ } do

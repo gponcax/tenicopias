@@ -13,6 +13,15 @@ module Tecnicopias
     end
   end
 
+  module SharedParams
+    extend Grape::API::Helpers
+
+    params :pagination do
+      optional :page, type: Integer, allow_blank: false
+      optional :per_page, type: Integer, allow_blank: false
+    end
+  end
+
   class Api < Grape::API
     format :json
     formatter :json, Grape::Formatter::ActiveModelSerializers

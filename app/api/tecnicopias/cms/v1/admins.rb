@@ -31,8 +31,11 @@ module Tecnicopias
           end
 
           desc 'Admin List'
+          params do
+            use :pagination
+          end
           get each_serializer: ::CMS::Admins::AdminSerializer do
-            Admin.all
+            paginate Admin.page(params[:page]).per(params[:per_page])
           end
 
           route_param :id, type: Integer, allow_blank: false, requirements: { id: /[0-9]*/ } do

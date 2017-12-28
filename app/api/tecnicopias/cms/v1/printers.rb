@@ -31,8 +31,11 @@ module Tecnicopias
           end
 
           desc 'Printer List'
+          params do
+            use :pagination
+          end
           get each_serializer: ::CMS::Printers::PrinterSerializer do
-            Printer.all
+            paginate Printer.page(params[:page]).per(params[:per_page])
           end
 
           route_param :id, type: Integer, allow_blank: false do
