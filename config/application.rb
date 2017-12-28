@@ -8,7 +8,7 @@ require "active_record/railtie"
 # require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
-require "action_cable"
+require "action_cable/engine"
 # require "action_cable/engine"
 require "sprockets/railtie"
 # require "rails/test_unit/railtie"
@@ -17,7 +17,7 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Tenicopias
+module Tecnicopias
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
