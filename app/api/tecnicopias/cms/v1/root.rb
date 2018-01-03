@@ -13,6 +13,7 @@ module Tecnicopias
         mount ::Tecnicopias::CMS::V1::Oauth
         mount ::Tecnicopias::CMS::V1::Printers
         mount ::Tecnicopias::CMS::V1::Groups
+        mount ::Tecnicopias::CMS::V1::Docs
 
 
         add_swagger_documentation mount_path: '/swagger_doc',
