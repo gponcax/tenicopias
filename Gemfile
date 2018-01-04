@@ -33,7 +33,7 @@ gem 'faker'
 gem 'grape-swagger'
 gem 'grape-swagger-rails'
 gem 'virtus'
-gem "fog-aws"
+gem 'aws-sdk', '~> 3'
 gem "figaro"
 gem 'kaminari'
 gem 'api-pagination'
