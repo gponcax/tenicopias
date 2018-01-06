@@ -63,7 +63,6 @@ module Tecnicopias
             end
             put do
               status 204
-
               result = ::CMS::Admins::Update.call(params)
 
               error!({ message: result.message, errors: result.errors },
