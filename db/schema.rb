@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180102224615) do
+ActiveRecord::Schema.define(version: 20180109062001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,11 +34,24 @@ ActiveRecord::Schema.define(version: 20180102224615) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
+  create_table "claims", force: :cascade do |t|
+    t.bigint "student_id"
+    t.bigint "doc_id"
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "status", default: false
+    t.index ["doc_id"], name: "index_claims_on_doc_id"
+    t.index ["student_id"], name: "index_claims_on_student_id"
+  end
+
   create_table "courses", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "group_id"
+    t.index ["group_id"], name: "index_courses_on_group_id"
   end
 
   create_table "docs", force: :cascade do |t|
@@ -60,9 +73,9 @@ ActiveRecord::Schema.define(version: 20180102224615) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "course_id"
     t.bigint "teacher_id"
-    t.index ["course_id"], name: "index_groups_on_course_id"
+    t.bigint "students_id"
+    t.index ["students_id"], name: "index_groups_on_students_id"
     t.index ["teacher_id"], name: "index_groups_on_teacher_id"
   end
 
@@ -143,9 +156,7 @@ ActiveRecord::Schema.define(version: 20180102224615) do
     t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
-    t.bigint "group_id"
     t.index ["email"], name: "index_students_on_email", unique: true
-    t.index ["group_id"], name: "index_students_on_group_id"
     t.index ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true
   end
 
@@ -169,10 +180,10 @@ ActiveRecord::Schema.define(version: 20180102224615) do
     t.index ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "courses", "groups"
   add_foreign_key "docs", "courses"
-  add_foreign_key "groups", "courses"
+  add_foreign_key "groups", "students", column: "students_id"
   add_foreign_key "groups", "teachers"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
-  add_foreign_key "students", "groups"
 end
