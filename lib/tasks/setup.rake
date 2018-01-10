@@ -1,5 +1,5 @@
 namespace :setup do
-  task create_test_admin: :environment do
+  task create_dummy_data: :environment do
     admin = Admin.create!({
                     name: Faker::Name.name,
                     email: 'admintest@test.com',
