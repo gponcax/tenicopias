@@ -7,7 +7,8 @@ namespace :setup do
                     password: 'welcome123'
                   }) unless Admin.nil?
 
-
+puts "===========ADMIN=========="
+puts admin
       teacher=  Teacher.create!({
                       name: Faker::Name.name,
                       email: Faker::Internet.email,
@@ -15,11 +16,16 @@ namespace :setup do
                       password: 'welcome123'
                     })
 
+puts "===========TEACHER=========="
+puts teacher
       printer=  Printer.create!({
                       name: Faker::Name.name,
                       email: Faker::Internet.email,
                       password: 'welcome123'
                     })
+
+puts "===========PRINTER=========="
+puts printer
 
     student= Student.create!({
                     name: Faker::Name.name,
@@ -28,18 +34,22 @@ namespace :setup do
                     password: 'welcome123'
                   })
 
+puts "===========STUDENT=========="
+puts student
       group = student.groups.create!({
           name: Faker::Educator.course,
           description: Faker::Educator.campus,
           teacher_id: teacher.id
           })
 
+puts "===========GROUP=========="
+puts group
     course = group.courses.create!({
                     name: Faker::Educator.course,
                     description: Faker::Educator.campus
                       })
-
-
+puts "===========COURSE=========="
+puts course
 
   end
 end
