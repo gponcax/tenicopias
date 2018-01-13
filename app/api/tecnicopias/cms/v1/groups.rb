@@ -20,13 +20,7 @@ module Tecnicopias
           desc 'Create Group'
           params do
             requires :name, allow_blank: false, type: String
-            requires :email, allow_blank: false, regexp: Devise::email_regexp, type: String
-            requires :password, allow_blank: false, type: String,
-                     documentation: { required: false, type: 'password' }
-            given :password do
-              requires :password_confirmation, allow_blank: false, type: String,
-                       documentation: { required: false, type: 'password' }
-            end
+            requires :description, allow_blank: false, type: String
           end
           post serializer: ::CMS::Groups::GroupSerializer do
             status 201
@@ -80,14 +74,8 @@ module Tecnicopias
 
             desc 'Update Group'
             params do
-              optional :name, allow_blank: false, type: String
-              optional :email, allow_blank: false, regexp: Devise::email_regexp, type: String
-              optional :password, allow_blank: false, type: String,
-                       documentation: { required: false, type: 'password' }
-              given :password do
-                requires :password_confirmation, allow_blank: false, type: String,
-                         documentation: { required: false, type: 'password' }
-              end
+              requires :name, allow_blank: false, type: String
+              requires :description, allow_blank: false, type: String
             end
             put do
               status 204

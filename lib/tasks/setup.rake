@@ -46,7 +46,9 @@ puts "===========GROUP=========="
 puts group
     course = group.courses.create!({
                     name: Faker::Educator.course,
-                    description: Faker::Educator.campus
+                    description: Faker::Educator.campus,
+                    teacher_id: teacher.id,
+                    student_id: student.id
                       })
 puts "===========COURSE=========="
 puts course
