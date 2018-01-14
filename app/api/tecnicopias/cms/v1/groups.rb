@@ -33,33 +33,6 @@ module Tecnicopias
               error!({ message: result.message, errors: result.errors }, result.code)
             end
           end
-
-          route_param :group_id, allow_blank: false, type: Integer do
-            namespace :docs do
-              desc 'Add new Doc'
-              params do
-                requires :description, type: String, allow_blank: false
-                requires :name, type: String, allow_blank: false
-                requires :document, type: File, allow_blank: false
-              end
-              post serializer: ::CMS::Groups::GroupSerializer do
-                status 201
-                result = ::CMS::Groups::AddDoc.call(params)
-
-                if result.succeed?
-                  result.response
-                else
-                  error!(
-                          {
-                            message: result.message,
-                            errors: result.errors
-                          }, result.code
-                        )
-                end
-              end
-            end
-          end
-
           route_param :id, type: Integer, allow_blank: false, requirements: { id: /[0-9]*/ } do
             desc 'Group Detail'
             get serializer: ::CMS::Groups::GroupSerializer do

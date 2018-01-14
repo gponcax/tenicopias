@@ -31,7 +31,9 @@ puts printer
                     name: Faker::Name.name,
                     email: Faker::Internet.email,
                     phone: Faker::PhoneNumber.phone_number,
-                    password: 'welcome123'
+                    password: 'welcome123',
+                    birthdate: Faker::Date.birthday(18, 65),
+                    gender: Faker::Boolean.boolean(0.2)
                   })
 
 puts "===========STUDENT=========="

@@ -22,6 +22,7 @@ module Tecnicopias
             requires :name, allow_blank: false, type: String
             requires :description, allow_blank: false, type: String
           end
+
           post serializer: ::CMS::Courses::CourseSerializer do
             status 201
 
@@ -58,6 +59,30 @@ module Tecnicopias
 
               error!({ message: result.message, errors: result.errors },
                      result.code) unless result.succeed?
+            end
+
+            namespace :docs do
+              desc 'Add new Doc'
+              params do
+                requires :description, type: String, allow_blank: false
+                requires :name, type: String, allow_blank: false
+                requires :document, type: File, allow_blank: false
+              end
+              post serializer: ::CMS::Courses::CourseSerializer do
+                status 201
+                result = ::CMS::Docs::Create.call(params)
+
+                if result.succeed?
+                  result.response
+                else
+                  error!(
+                          {
+                            message: result.message,
+                            errors: result.errors
+                          }, result.code
+                        )
+                end
+              end
             end
 
             desc 'Delete Course'
