@@ -6,25 +6,6 @@ module Tecnicopias
           before do
             doorkeeper_authorize! :admin
           end
-
-          # desc 'Create Doc'
-          # params do
-          #   requires :name, allow_blank: false, type: String
-          #   requires :description, allow_blank: false, type: String
-          #   requires :document, allow_blank: false, type: File
-          # end
-          # post serializer: ::CMS::Docs::DocSerializer do
-          #   status 201
-          #
-          #   result = ::CMS::Docs::Create.call(params)
-          #
-          #   if result.succeed?
-          #     result.response
-          #   else
-          #     error!({ message: result.message, errors: result.errors }, result.code)
-          #   end
-          # end
-
           desc 'Doc List'
           params do
             use :pagination
@@ -76,7 +57,7 @@ module Tecnicopias
             end
           end
           namespace :courses do
-            route_param :course_id, allow_blank: false, type: Integer do
+            route_param :id, allow_blank: false, type: Integer do
 
               desc 'Create Doc'
               params do
@@ -93,10 +74,8 @@ module Tecnicopias
                   error!({ message: result.message, errors: result.errors }, result.code)
                 end
               end
-#----------------------------------------
             end
           end
-#----------------------------------------
         end
       end
     end
