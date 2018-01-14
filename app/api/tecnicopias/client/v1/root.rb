@@ -6,7 +6,7 @@ module Tecnicopias
         prefix :client
 
         helpers Doorkeeper::Grape::Helpers, CurrentResourceOwnerHelper
-        mount ::Tecnicopias::CMS::V1::Oauth
+        mount ::Tecnicopias::Client::V1::Oauth
         mount ::Tecnicopias::Client::V1::Groups
 
         add_swagger_documentation mount_path: '/swagger_doc',

@@ -9,6 +9,8 @@ module Tecnicopias
       case doorkeeper_token.scopes.first
         when 'admin'
           Admin.find(doorkeeper_token.resource_owner_id)
+        when 'student'
+          Student.find(doorkeeper_token.resource_owner_id)
       end
     end
   end
