@@ -21,8 +21,8 @@ Doorkeeper.configure do
                               Teacher.find_for_database_authentication(email: params[:email])
                             elsif params[:scope] == 'copy'
                               Printer.find_for_database_authentication(email: params[:email])
-                            elsif params[:scope] == 'client'
-                              User.find_for_database_authentication(email: params[:email])
+                            elsif params[:scope] == STUDENT
+                              Student.find_for_database_authentication(email: params[:email])
                             end
 
     if resource_instance && resource_instance.valid_for_authentication? {
@@ -76,8 +76,8 @@ Doorkeeper.configure do
   # Define access token scopes for your provider
   # For more information go to
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Scopes
-  default_scopes  :client
-  optional_scopes :admin, :teacher, :copy
+  # default_scopes  :student
+  optional_scopes :admin, :teacher, :copy, :student
 
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then

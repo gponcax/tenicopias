@@ -3,8 +3,8 @@ GrapeSwaggerRails.options.before_action do |request|
 
   if request.path.match('/apidoc-cms/').present?
     GrapeSwaggerRails.options.url = '/cms/v1/swagger_doc.json'
-  else
-    GrapeSwaggerRails.options.url = '/v1/swagger_doc.json'
+  elsif request.path.match('/apidoc-client/').present?
+    GrapeSwaggerRails.options.url = '/client/v1/swagger_doc.json'
   end
 end
 

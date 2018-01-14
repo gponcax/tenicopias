@@ -1,16 +1,14 @@
 namespace :setup do
-  task create_test_admin: :environment do
+  task create_dummy_data: :environment do
     admin = Admin.create!({
                     name: Faker::Name.name,
                     email: 'admintest@test.com',
                     phone: Faker::PhoneNumber.phone_number,
                     password: 'welcome123'
                   }) unless Admin.nil?
-      course = Course.create!({
-                      name: Faker::Educator.course,
-                      description: Faker::Educator.campus
-                        })
 
+puts "===========ADMIN=========="
+puts admin
       teacher=  Teacher.create!({
                       name: Faker::Name.name,
                       email: Faker::Internet.email,
@@ -18,24 +16,42 @@ namespace :setup do
                       password: 'welcome123'
                     })
 
-      teacher=  Printer.create!({
+puts "===========TEACHER=========="
+puts teacher
+      printer=  Printer.create!({
                       name: Faker::Name.name,
                       email: Faker::Internet.email,
                       password: 'welcome123'
                     })
-      group = course.groups.create!({
+
+puts "===========PRINTER=========="
+puts printer
+
+    student= Student.create!({
+                    name: Faker::Name.name,
+                    email: Faker::Internet.email,
+                    phone: Faker::PhoneNumber.phone_number,
+                    password: 'welcome123'
+                  })
+
+puts "===========STUDENT=========="
+puts student
+      group = student.groups.create!({
           name: Faker::Educator.course,
           description: Faker::Educator.campus,
           teacher_id: teacher.id
           })
 
-
-      student=  group.students.create!({
-                      name: Faker::Name.name,
-                      email: Faker::Internet.email,
-                      phone: Faker::PhoneNumber.phone_number,
-                      password: 'welcome123'
-                    })
+puts "===========GROUP=========="
+puts group
+    course = group.courses.create!({
+                    name: Faker::Educator.course,
+                    description: Faker::Educator.campus,
+                    teacher_id: teacher.id,
+                    student_id: student.id
+                      })
+puts "===========COURSE=========="
+puts course
 
   end
 end
