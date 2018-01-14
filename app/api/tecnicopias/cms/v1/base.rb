@@ -7,8 +7,8 @@ module Tecnicopias
         default_format :json
 
         helpers Doorkeeper::Grape::Helpers,
-            Tecnicopias::CurrentResourceOwnerHelper,
-            Tecnicopias::SharedParams
+        Tecnicopias::CurrentResourceOwnerHelper,
+        Tecnicopias::SharedParams
       end
     end
   end

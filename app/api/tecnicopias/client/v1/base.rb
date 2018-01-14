@@ -5,6 +5,10 @@ module Tecnicopias
         content_type :json, 'application/json'
         format :json
         default_format :json
+        
+        helpers Doorkeeper::Grape::Helpers,
+        Tecnicopias::CurrentResourceOwnerHelper,
+        Tecnicopias::SharedParams
       end
     end
   end
