@@ -20,7 +20,7 @@ module Tecnicopias
             requires :scope,
                      type: String,
                      allow_blank: false,
-                     values: %w(admin teacher copy)
+                     values: %w(admin teacher printer)
           end
           post :token do
           end

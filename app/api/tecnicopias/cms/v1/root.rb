@@ -15,6 +15,7 @@ module Tecnicopias
         mount ::Tecnicopias::CMS::V1::Groups
         mount ::Tecnicopias::CMS::V1::Docs
         mount ::Tecnicopias::CMS::V1::Courses
+        mount ::Tecnicopias::CMS::V1::Me
 
 
         add_swagger_documentation mount_path: '/swagger_doc',
