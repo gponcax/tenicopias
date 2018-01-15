@@ -3,6 +3,7 @@ class Doc < ApplicationRecord
   validates_attachment :document, content_type: { content_type: "application/pdf" }
 
   belongs_to :course
-  has_many :students, through: :claim
+  has_many :students, through: :claims
   has_many :claims
+  # accepts_nested_attributes_for :claims
 end
