@@ -53,10 +53,13 @@ module Tecnicopias
 
             desc 'Student Groups'
             namespace :groups do
+              params do
+                use :pagination
+              end
               get serializer: ::CMS::Groups::GroupSerializer do
                 result = ::CMS::Students::Groups.call(params[:id])
                 if result.succeed?
-                  result.response
+                  paginate result.response
                 else
                   error!({ message: result.message, errors: result.errors }, result.code)
                 end
