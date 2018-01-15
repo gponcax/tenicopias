@@ -79,6 +79,7 @@ module Tecnicopias
                          documentation: { type: 'password', required: false }
               end
             end
+
             put do
               status 204
 
@@ -87,6 +88,22 @@ module Tecnicopias
               error!({ message: result.message, errors: result.errors },
                      result.code) unless result.succeed?
             end
+
+            desc 'Update Avatar'
+            namespace :avatar do
+            params do
+              requires :avatar, type: File, allow_blank: false
+            end
+
+            put do
+              status 204
+
+              result = ::CMS::Students::UpdateAvatar.call(params)
+
+              error!({ message: result.message, errors: result.errors },
+                     result.code) unless result.succeed?
+            end
+          end
 
             desc 'Delete Students'
             delete do
