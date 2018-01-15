@@ -15,11 +15,11 @@ Doorkeeper.configure do
   end
 
   resource_owner_from_credentials do |routes|
-    resource_instance = if params[:scope] == 'admin'
+    resource_instance = if params[:scope] == ADMIN
                               Admin.find_for_database_authentication(email: params[:email])
-                            elsif params[:scope] == 'teacher'
+                            elsif params[:scope] == TEACHER
                               Teacher.find_for_database_authentication(email: params[:email])
-                            elsif params[:scope] == 'copy'
+                            elsif params[:scope] == PRINTER
                               Printer.find_for_database_authentication(email: params[:email])
                             elsif params[:scope] == STUDENT
                               Student.find_for_database_authentication(email: params[:email])
@@ -77,7 +77,7 @@ Doorkeeper.configure do
   # For more information go to
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Scopes
   # default_scopes  :student
-  optional_scopes :admin, :teacher, :copy, :student
+  optional_scopes :admin, :teacher, :printer, :student
 
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then

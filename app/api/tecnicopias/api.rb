@@ -1,15 +1,23 @@
 require 'doorkeeper/grape/helpers'
 require 'grape-swagger'
-
 module Tecnicopias
+  ADMIN = 'admin'.freeze
+  TEACHER = 'teacher'.freeze
+  PRINTER = 'printer'.freeze
+  STUDENT = 'student'.freeze
+
   module CurrentResourceOwnerHelper
     def current_resource_owner
       return unless doorkeeper_token
 
       case doorkeeper_token.scopes.first
-        when 'admin'
+        when ADMIN
           Admin.find(doorkeeper_token.resource_owner_id)
-        when 'student'
+        when TEACHER
+          Teacher.find(doorkeeper_token.resource_owner_id)
+        when PRINTER
+          Printer.find(doorkeeper_token.resource_owner_id)
+        when STUDENT
           Student.find(doorkeeper_token.resource_owner_id)
       end
     end
