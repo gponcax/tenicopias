@@ -10,7 +10,7 @@ module CMS
       end
 
       def call
-        admin = Student.find_by(id: id)
+        admin = Student.find(id)
 
         return error(
           title: ERROR_TITLE,

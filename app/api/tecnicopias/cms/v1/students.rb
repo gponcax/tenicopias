@@ -51,6 +51,19 @@ module Tecnicopias
               end
             end
 
+            desc 'Student Groups'
+            namespace :groups do
+              get serializer: ::CMS::Groups::GroupSerializer do
+                result = ::CMS::Students::Groups.call(params[:id])
+                if result.succeed?
+                  result.response
+                else
+                  error!({ message: result.message, errors: result.errors }, result.code)
+                end
+              end
+            end
+
+
             desc 'Update Student'
             params do
               optional :name, allow_blank: false, type: String
