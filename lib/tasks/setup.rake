@@ -33,7 +33,8 @@ puts printer
                     phone: Faker::PhoneNumber.phone_number,
                     password: 'welcome123',
                     birthdate: Faker::Date.birthday(18, 65),
-                    gender: Faker::Boolean.boolean(0.2)
+                    gender: Faker::Boolean.boolean(0.2),
+                    avatar: Faker::Avatar.image("my-own-slug", "50x50") #=> "https://robohash.org/my-own-slug.png?size=50x50"
                   })
 
 puts "===========STUDENT=========="

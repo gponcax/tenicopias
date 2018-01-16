@@ -8,6 +8,8 @@ module Tecnicopias
         helpers Doorkeeper::Grape::Helpers, CurrentResourceOwnerHelper
         mount ::Tecnicopias::Client::V1::Oauth
         mount ::Tecnicopias::Client::V1::Groups
+        mount ::Tecnicopias::Client::V1::Courses
+        mount ::Tecnicopias::Client::V1::Claims
 
         add_swagger_documentation mount_path: '/swagger_doc',
                                   base_path: '/',
