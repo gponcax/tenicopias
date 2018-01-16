@@ -83,6 +83,19 @@ module Tecnicopias
                         )
                 end
               end
+              desc 'List docs'
+              params do
+                use :pagination
+              end
+              get serializer: ::CMS::Docs::DocSerializer do
+                result = ::CMS::Courses::FindDocs.call(params[:id])
+              
+                if result.succeed?
+                  paginate result.response
+                else
+                  error!({ message: result.message, errors: result.errors }, result.code)
+                end
+              end
             end
 
             desc 'Delete Course'
