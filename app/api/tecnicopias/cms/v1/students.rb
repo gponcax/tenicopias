@@ -66,6 +66,20 @@ module Tecnicopias
               end
             end
 
+            desc 'Student Courses'
+            namespace :courses do
+              params do
+                use :pagination
+              end
+              get serializer: ::CMS::Courses::CourseSerializer do
+                result = ::CMS::Students::Courses.call(params[:id])
+                if result.succeed?
+                  paginate result.response
+                else
+                  error!({ message: result.message, errors: result.errors }, result.code)
+                end
+              end
+            end
 
             desc 'Update Student'
             params do

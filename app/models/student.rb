@@ -12,4 +12,5 @@
 
     has_many :claims
     accepts_nested_attributes_for :claims
+    has_many :courses
 end
