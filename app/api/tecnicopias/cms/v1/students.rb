@@ -72,7 +72,7 @@ module Tecnicopias
                 use :pagination
               end
               get serializer: ::CMS::Courses::CourseSerializer do
-                result = ::CMS::Students::Courses.call(params[:id])
+                result = ::CMS::Students::FindCourses.call(params[:id])
                 if result.succeed?
                   paginate result.response
                 else

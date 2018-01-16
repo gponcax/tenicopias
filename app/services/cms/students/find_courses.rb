@@ -1,6 +1,6 @@
 module CMS
   module Students
-    class Courses < ::BaseService
+    class FindCourses < ::BaseService
       ERROR_TITLE = 'Course Error'.freeze
       attribute :id, Integer, writer: :private
       def initialize(id)
