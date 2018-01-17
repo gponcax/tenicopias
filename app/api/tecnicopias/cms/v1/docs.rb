@@ -63,6 +63,8 @@ module Tecnicopias
               params do
                 requires :name, allow_blank: false, type: String
                 requires :description, allow_blank: false, type: String
+                requires :price, allow_blank: false, type: Integer
+                requires :page_numbers, allow_blank: false, type: Integer
                 requires :document, allow_blank: false, type: File
               end
               post serializer: ::CMS::Docs::DocSerializer do

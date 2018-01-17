@@ -9,7 +9,6 @@ module Tecnicopias
 
           desc 'Profile'
           get do
-          
             current_resource_owner
           end
         end

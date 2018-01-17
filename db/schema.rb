@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180115074403) do
+ActiveRecord::Schema.define(version: 20180117060625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,11 @@ ActiveRecord::Schema.define(version: 20180115074403) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "status", default: false
+    t.boolean "sent", default: true
+    t.boolean "denied", default: false
+    t.boolean "printed", default: false
+    t.boolean "delivered", default: false
+    t.boolean "approved", default: false
     t.index ["doc_id"], name: "index_claims_on_doc_id"
     t.index ["student_id"], name: "index_claims_on_student_id"
   end
@@ -69,6 +74,10 @@ ActiveRecord::Schema.define(version: 20180115074403) do
     t.string "document_content_type"
     t.integer "document_file_size"
     t.datetime "document_updated_at"
+    t.string "mime_type"
+    t.integer "file_size"
+    t.integer "price", default: 0
+    t.integer "page_numbers", default: 0
     t.index ["course_id"], name: "index_docs_on_course_id"
   end
 
@@ -189,6 +198,14 @@ ActiveRecord::Schema.define(version: 20180115074403) do
     t.index ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true
   end
 
+  create_table "wallets", force: :cascade do |t|
+    t.string "balance"
+    t.bigint "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_wallets_on_student_id"
+  end
+
   add_foreign_key "courses", "groups"
   add_foreign_key "courses", "students"
   add_foreign_key "courses", "teachers"
@@ -197,4 +214,5 @@ ActiveRecord::Schema.define(version: 20180115074403) do
   add_foreign_key "groups", "teachers"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "wallets", "students"
 end
