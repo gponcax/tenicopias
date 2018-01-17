@@ -8,9 +8,10 @@
                         size: { in: 0..3.megabytes }, presence: true
 
     has_many :groups
-    has_many :docs, through: :claims
 
     has_many :claims
-    # accepts_nested_attributes_for :claims
+    has_many :docs, through: :claims
+    # has_many :docs
+
     has_many :courses
 end

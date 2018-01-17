@@ -13,7 +13,9 @@ module Tecnicopias
           end
 
           get each_serializer: ::Client::Claims::ClaimSerializer do
-            paginate  current_resource_owner.claims.page(params[:page]).per(params[:per_page])
+    
+            # paginate  current_resource_owner.claims.page(params[:page]).per(params[:per_page])
+            result = current_resource_owner.claims
           end
 
           desc 'Create Claims'

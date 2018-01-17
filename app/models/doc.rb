@@ -5,7 +5,9 @@ class Doc < ApplicationRecord
                         size: { in: 0..3.megabytes }, presence: true
 
   belongs_to :course
-  has_many :students, through: :claims
+
   has_many :claims
-  # accepts_nested_attributes_for :claims
+  has_many :students, through: :claims
+
+  # has_many :students
 end

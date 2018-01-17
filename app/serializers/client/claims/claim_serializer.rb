@@ -1,7 +1,13 @@
 module Client
   module Claims
     class ClaimSerializer < ActiveModel::Serializer
-      attributes :id, :send, :denied, :printed, :delivered, :approved
+      attributes :id, :student_id, :doc_id, :date,
+      :document
+
+       #, :send, :denied, :printed, :delivered, :approved
+      def document
+        object.doc
+      end
 
       def created_at
         object.created_at.iso8601
