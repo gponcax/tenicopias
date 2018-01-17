@@ -11,9 +11,10 @@ module Client
       end
 
       def call
-        success(
-          Claim.create!(params)
-        )
+        
+        claim = student.claims.create!(params)
+        success claim
+
       rescue ActiveRecord::RecordInvalid => e
         return error(response: e.record, title: ERROR_TITLE, code: 422,
                      message: 'Claim could not be created', errors: e.record.errors)

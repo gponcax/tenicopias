@@ -1,33 +1,66 @@
 namespace :setup do
   task create_dummy_data: :environment do
-    admin = Admin.create!({
+    if Admin.last.nil?
+      admin = Admin.create!({
                     name: Faker::Name.name,
                     email: 'admintest@test.com',
                     phone: Faker::PhoneNumber.phone_number,
                     password: 'welcome123'
                   }) unless Admin.nil?
-
+    end
 puts "===========ADMIN=========="
 puts admin
-      teacher=  Teacher.create!({
+
+
+teacher1=  Teacher.create!({
+                name: Faker::Name.name,
+                email: Faker::Internet.email,
+                phone: Faker::PhoneNumber.phone_number,
+                password: 'welcome123'
+              })
+
+puts "===========TEACHER1=========="
+puts teacher1
+
+teacher2=  Teacher.create!({
+                name: Faker::Name.name,
+                email: Faker::Internet.email,
+                phone: Faker::PhoneNumber.phone_number,
+                password: 'welcome123'
+              })
+
+puts "===========TEACHER2========="
+puts teacher2
+
+teacher3=  Teacher.create!({
+                name: Faker::Name.name,
+                email: Faker::Internet.email,
+                phone: Faker::PhoneNumber.phone_number,
+                password: 'welcome123'
+              })
+
+puts "===========TEACHER3=========="
+puts teacher3
+
+teacher4=  Teacher.create!({
+                name: Faker::Name.name,
+                email: Faker::Internet.email,
+                phone: Faker::PhoneNumber.phone_number,
+                password: 'welcome123'
+              })
+
+puts "===========TEACHER4=========="
+puts teacher4
+
+printer=  Printer.create!({
                       name: Faker::Name.name,
                       email: Faker::Internet.email,
-                      phone: Faker::PhoneNumber.phone_number,
                       password: 'welcome123'
                     })
-
-puts "===========TEACHER=========="
-puts teacher
-      printer=  Printer.create!({
-                      name: Faker::Name.name,
-                      email: Faker::Internet.email,
-                      password: 'welcome123'
-                    })
-
-puts "===========PRINTER=========="
+puts "===========PRINTE=========="
 puts printer
 
-    student= Student.create!({
+student1= Student.create!({
                     name: Faker::Name.name,
                     email: Faker::Internet.email,
                     phone: Faker::PhoneNumber.phone_number,
@@ -38,23 +71,45 @@ puts printer
                   })
 
 puts "===========STUDENT=========="
-puts student
-      group = student.groups.create!({
+puts student1
+
+group = student1.groups.create!({
           name: Faker::Educator.course,
           description: Faker::Educator.campus,
-          teacher_id: teacher.id
+          teacher_id: teacher1.id
           })
 
 puts "===========GROUP=========="
 puts group
-    course = group.courses.create!({
-                    name: Faker::Educator.course,
-                    description: Faker::Educator.campus,
-                    teacher_id: teacher.id,
-                    student_id: student.id
-                      })
-puts "===========COURSE=========="
-puts course
+
+course = group.courses.create!({
+                name: Faker::Educator.course,
+                description: Faker::Educator.campus,
+                teacher_id: teacher1.id,
+                student_id: student1.id
+                  })
+puts "===========COURSE2=========="
+course = group.courses.create!({
+                name: Faker::Educator.course,
+                description: Faker::Educator.campus,
+                teacher_id: teacher2.id,
+                student_id: student1.id
+                  })
+puts "===========COURSE3=========="
+course = group.courses.create!({
+                name: Faker::Educator.course,
+                description: Faker::Educator.campus,
+                teacher_id: teacher3.id,
+                student_id: student1.id
+                  })
+puts "===========COURSE4=========="
+course = group.courses.create!({
+                name: Faker::Educator.course,
+                description: Faker::Educator.campus,
+                teacher_id: teacher3.id,
+                student_id: student1.id
+                  })
+puts "===========COURSE5=========="
 
   end
 end

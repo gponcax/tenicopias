@@ -5,6 +5,8 @@ module CMS
        attribute :document, Tempfile, writer: :private
        attribute :name, String, writer: :private
        attribute :description, String, writer: :private
+       attribute :price, Integer, writer: :private
+       attribute :page_numbers, Integer, writer: :private
 
        ERROR_TITLE = 'Doc Error'.freeze
 
@@ -13,6 +15,8 @@ module CMS
          self.document = options[:document]
          self.name = options[:name]
          self.description = options[:description]
+         self.price = options[:price]
+         self.page_numbers = options[:page_numbers]
        end
 
        def call
@@ -24,12 +28,18 @@ module CMS
                         message: 'Group not found'
                       ) unless course
 
-        doc = course.docs.create!(
-                                document: ActionDispatch::Http::UploadedFile.new(document),
+          doc_open = ActionDispatch::Http::UploadedFile.new(document)
+          doc = course.docs.create!(
+                                document: doc_open,
+                                mime_type: doc_open.content_type,
+                                file_size: doc_open.size,
                                 name: name,
+                                price: price,
+                                page_numbers: page_numbers,
                                 description: description)
 
-        success(doc)
+          success(doc)
+
 
        rescue ActiveRecord::RecordInvalid => e
          return error(

@@ -4,6 +4,7 @@ class Doc < ApplicationRecord
                         content_type: { content_type: "application/pdf" },
                         size: { in: 0..3.megabytes }, presence: true
 
+  # .rtf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf
   belongs_to :course
 
   has_many :claims

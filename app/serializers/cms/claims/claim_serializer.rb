@@ -1,9 +1,9 @@
-module Client
+module CMS
   module Claims
     class ClaimSerializer < ActiveModel::Serializer
-      attributes  :id,:document, :denied, :printed,
+      attributes  :id,:doc, :denied, :printed,
                   :sent, :delivered, :approved
-      def document
+      def doc
         object.doc
       end
 

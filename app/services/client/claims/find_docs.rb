@@ -1,4 +1,4 @@
-module CMS
+module Client
   module Courses
     class FindDocs < ::BaseService
       ERROR_TITLE = 'Course Error'.freeze
@@ -19,8 +19,6 @@ module CMS
         ) unless docs
 
         success(docs)
-      rescue => e
-        return error(reponse: e, title: ERROR_TITLE, message: e.message, code: 422)
       end
     end
   end

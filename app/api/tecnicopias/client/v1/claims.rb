@@ -13,21 +13,18 @@ module Tecnicopias
           end
 
           get each_serializer: ::Client::Claims::ClaimSerializer do
-    
-            # paginate  current_resource_owner.claims.page(params[:page]).per(params[:per_page])
-            result = current_resource_owner.claims
+            paginate  current_resource_owner.claims.page(params[:page]).per(params[:per_page])
           end
 
           desc 'Create Claims'
           params do
-            requires :student_id, allow_blank: false, type: Integer
             requires :doc_id, allow_blank: false, type: Integer
           end
 
           post serializer: ::Client::Claims::ClaimSerializer do
             status 201
+    
             result = ::Client::Claims::Create.call(current_resource_owner, params)
-
             if result.succeed?
               result.response
             else
