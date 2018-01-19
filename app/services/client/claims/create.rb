@@ -11,7 +11,9 @@ module Client
       end
 
       def call
-        
+        # wallet = ::Clients::Wallets::Find.call()
+
+        binding.pry
         claim = student.claims.create!(params)
         success claim
 

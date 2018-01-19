@@ -9,6 +9,4 @@ class Doc < ApplicationRecord
 
   has_many :claims
   has_many :students, through: :claims
-
-  # has_many :students
 end

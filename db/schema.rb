@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180117060625) do
+ActiveRecord::Schema.define(version: 20180119053211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,8 +46,12 @@ ActiveRecord::Schema.define(version: 20180117060625) do
     t.boolean "printed", default: false
     t.boolean "delivered", default: false
     t.boolean "approved", default: false
+    t.bigint "wallet_id"
+    t.bigint "transaction_id"
     t.index ["doc_id"], name: "index_claims_on_doc_id"
     t.index ["student_id"], name: "index_claims_on_student_id"
+    t.index ["transaction_id"], name: "index_claims_on_transaction_id"
+    t.index ["wallet_id"], name: "index_claims_on_wallet_id"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -55,11 +59,7 @@ ActiveRecord::Schema.define(version: 20180117060625) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "group_id"
     t.bigint "teacher_id"
-    t.bigint "student_id"
-    t.index ["group_id"], name: "index_courses_on_group_id"
-    t.index ["student_id"], name: "index_courses_on_student_id"
     t.index ["teacher_id"], name: "index_courses_on_teacher_id"
   end
 
@@ -86,10 +86,10 @@ ActiveRecord::Schema.define(version: 20180117060625) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "teacher_id"
     t.bigint "student_id"
+    t.bigint "course_id"
+    t.index ["course_id"], name: "index_groups_on_course_id"
     t.index ["student_id"], name: "index_groups_on_student_id"
-    t.index ["teacher_id"], name: "index_groups_on_teacher_id"
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -198,21 +198,27 @@ ActiveRecord::Schema.define(version: 20180117060625) do
     t.index ["reset_password_token"], name: "index_teachers_on_reset_password_token", unique: true
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.bigint "wallet_id"
+    t.index ["wallet_id"], name: "index_transactions_on_wallet_id"
+  end
+
   create_table "wallets", force: :cascade do |t|
-    t.string "balance"
+    t.integer "balance", default: 0
     t.bigint "student_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["student_id"], name: "index_wallets_on_student_id"
   end
 
-  add_foreign_key "courses", "groups"
-  add_foreign_key "courses", "students"
+  add_foreign_key "claims", "transactions"
+  add_foreign_key "claims", "wallets"
   add_foreign_key "courses", "teachers"
   add_foreign_key "docs", "courses"
+  add_foreign_key "groups", "courses"
   add_foreign_key "groups", "students"
-  add_foreign_key "groups", "teachers"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "transactions", "wallets"
   add_foreign_key "wallets", "students"
 end

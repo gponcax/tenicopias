@@ -61,6 +61,23 @@ module Tecnicopias
                      result.code) unless result.succeed?
             end
 
+            namespace :students do
+              params do
+                use :pagination
+              end
+
+              desc 'Students'
+              get serializer: ::CMS::Students::StudentSerializer do
+                result = ::CMS::Courses::FindStudents.call(params[:id])
+
+                if result.succeed?
+                  paginate result.response
+                else
+                  error!({ message: result.message, errors: result.errors }, result.code)
+                end
+              end
+            end
+
             namespace :docs do
               desc 'Add new Doc'
               params do
@@ -89,7 +106,7 @@ module Tecnicopias
               end
               get serializer: ::CMS::Docs::DocSerializer do
                 result = ::CMS::Courses::FindDocs.call(params[:id])
-              
+
                 if result.succeed?
                   paginate result.response
                 else
