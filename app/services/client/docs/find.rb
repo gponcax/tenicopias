@@ -1,21 +1,21 @@
 module Client
-  module Courses
+  module Docs
     class Find < ::BaseService
-      ERROR_TITLE = 'Course Error'.freeze
+      ERROR_TITLE = 'Doc Error'.freeze
 
       attribute :id, Integer, writer: :private
 
       def initialize(id)
-        self.id = id
+        self.id = id["doc_id"]
       end
 
       def call
-        admin = Course.find_by(id: id)
+        admin = Doc.find_by(id: id)
 
         return error(
           title: ERROR_TITLE,
           code: 404,
-          message: 'Course not found'
+          message: 'Doc not found'
         ) unless admin
 
         success(admin)

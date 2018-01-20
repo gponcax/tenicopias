@@ -1,5 +1,5 @@
 namespace :setup do
-  task create_dummy_data: :environment do
+  task dummy_data: :environment do
     if Admin.last.nil?
       admin = Admin.create!({
                     name: Faker::Name.name,
@@ -143,6 +143,13 @@ group2 = student1.groups.create!({
           name: Faker::Educator.course,
           description: Faker::Educator.campus,
           course_id: teacher2_course2.id
+          })
+puts "===========GROUPs=========="
+
+group3 = student2.groups.create!({
+          name: Faker::Educator.course,
+          description: Faker::Educator.campus,
+          course_id: teacher1_course1.id
           })
 puts "===========GROUPs=========="
 
