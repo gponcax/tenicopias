@@ -1,6 +1,6 @@
-module Client
+module CMS
   module Courses
-    class Find < ::BaseService
+    class FindStudents < ::BaseService
       ERROR_TITLE = 'Course Error'.freeze
 
       attribute :id, Integer, writer: :private
@@ -10,15 +10,15 @@ module Client
       end
 
       def call
-        admin = Course.find_by(id: id)
-
+        course = Course.find(id)
+        docs = course.students
         return error(
           title: ERROR_TITLE,
           code: 404,
           message: 'Course not found'
-        ) unless admin
+        ) unless docs
 
-        success(admin)
+        success(docs)
       rescue => e
         return error(reponse: e, title: ERROR_TITLE, message: e.message, code: 422)
       end

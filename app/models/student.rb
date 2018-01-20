@@ -2,11 +2,13 @@
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :groups
+  has_one :wallet
+
   has_many :claims
   has_many :docs, through: :claims
-  has_many :courses
-  has_one :wallet
+
+  has_many :groups
+  has_many :courses, through: :groups
 
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }
 
