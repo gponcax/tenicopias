@@ -10,7 +10,7 @@ module CMS
       end
 
       def call
-        admin = Doc.find_by(id: id)
+        admin = Doc.find(id)
 
         return error(
           title: ERROR_TITLE,
