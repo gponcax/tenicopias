@@ -15,7 +15,7 @@ module Client
 
         claim = student.claims.create!(params)
         balance = ::Client::Claims::Balance.call(student, params)
-binding.pry
+
         success claim
 
       rescue ActiveRecord::RecordInvalid => e
