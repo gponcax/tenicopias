@@ -1,5 +1,5 @@
 module CMS
-  module Courses
+  module Claims
     class FindDocs < ::BaseService
       ERROR_TITLE = 'Course Error'.freeze
 
