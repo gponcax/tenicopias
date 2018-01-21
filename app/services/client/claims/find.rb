@@ -1,5 +1,5 @@
 module Client
-  module Courses
+  module Claims
     class Find < ::BaseService
       ERROR_TITLE = 'Course Error'.freeze
 
