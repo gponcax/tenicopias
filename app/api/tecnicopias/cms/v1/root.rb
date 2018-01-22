@@ -17,6 +17,7 @@ module Tecnicopias
         mount ::Tecnicopias::CMS::V1::Courses
         mount ::Tecnicopias::CMS::V1::Me
         mount ::Tecnicopias::CMS::V1::Claims
+        mount ::Tecnicopias::CMS::V1::Wallets
 
 
         add_swagger_documentation mount_path: '/swagger_doc',

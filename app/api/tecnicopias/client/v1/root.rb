@@ -11,7 +11,7 @@ module Tecnicopias
         mount ::Tecnicopias::Client::V1::Courses
         mount ::Tecnicopias::Client::V1::Claims
         mount ::Tecnicopias::Client::V1::Docs
-
+        mount ::Tecnicopias::Client::V1::Wallets
         add_swagger_documentation mount_path: '/swagger_doc',
                                   base_path: '/',
                                   in: 'json',

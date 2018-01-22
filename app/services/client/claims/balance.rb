@@ -13,15 +13,10 @@ module Client
 
       def call
         wallet = ::Client::Wallets::Find.call(student.wallet.id)
-
-        doc = ::Client::Docs::Find.call(params)
-
+        doc = ::Client::Docs::Find.call(params["doc_id"])
         amount = doc.response.price
-
         balance = wallet.response.balance - amount
-
         new_balance = wallet.response.update!(balance: balance)
-
         success new_balance
 
       rescue ActiveRecord::RecordInvalid => e

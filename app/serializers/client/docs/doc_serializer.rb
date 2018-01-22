@@ -7,6 +7,10 @@ module Client
       def created_at
         object.created_at.iso8601
       end
+
+      def price
+        currency = Money.new(object.price, "USD").format
+      end
     end
   end
 end

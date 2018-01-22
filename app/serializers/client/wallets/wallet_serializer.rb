@@ -1,4 +1,4 @@
-module CMS
+module Client
   module Wallets
     class WalletSerializer < ActiveModel::Serializer
       attributes :id, :balance
@@ -7,9 +7,9 @@ module CMS
         object.created_at.iso8601
       end
 
-      # def balamce
-      #
-      # end
+      def balance
+        currency = Money.new(object.balance, "USD").format
+      end
     end
   end
 end

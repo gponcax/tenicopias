@@ -40,6 +40,7 @@ gem 'api-pagination'
 gem 'paperclip'
 gem "genderize"
 gem 'rails_12factor'
+gem 'money'
 
 
 group :development, :test do
