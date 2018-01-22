@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
- 
+
   scope 'client/v1' do
     use_doorkeeper do
       skip_controllers :applications, :authorized_applications, :authorizations

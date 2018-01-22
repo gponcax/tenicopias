@@ -17,7 +17,7 @@ module Tecnicopias
           route_param :id, type: Integer, allow_blank: false, requirements: { id: /[0-9]*/ } do
             desc 'Doc Detail'
             get serializer: ::CMS::Docs::DocSerializer do
-              result = ::CMS::Docs::Find.call(params[:id])
+              result = ::Client::Docs::Find.call(params[:id])
 
               if result.succeed?
                 result.response

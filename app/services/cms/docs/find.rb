@@ -10,17 +10,20 @@ module CMS
       end
 
       def call
-        admin = Doc.find(id)
+        doc = Doc.find_by(id: id)
 
         return error(
           title: ERROR_TITLE,
           code: 404,
           message: 'Doc not found'
-        ) unless admin
+        ) unless doc
 
-        success(admin)
+        success(doc)
       rescue => e
-        return error(reponse: e, title: ERROR_TITLE, message: e.message, code: 422)
+        return error(reponse: e,
+                    title: ERROR_TITLE,
+                    message: e.message,
+                    code: 422)
       end
     end
   end
