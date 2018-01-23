@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180119053211) do
+ActiveRecord::Schema.define(version: 20180123054955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,12 @@ ActiveRecord::Schema.define(version: 20180119053211) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
+  create_table "balances", force: :cascade do |t|
+    t.integer "total_amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "claims", force: :cascade do |t|
     t.bigint "student_id"
     t.bigint "doc_id"
@@ -48,7 +54,9 @@ ActiveRecord::Schema.define(version: 20180119053211) do
     t.boolean "approved", default: false
     t.bigint "wallet_id"
     t.bigint "transaction_id"
+    t.bigint "purchase_id"
     t.index ["doc_id"], name: "index_claims_on_doc_id"
+    t.index ["purchase_id"], name: "index_claims_on_purchase_id"
     t.index ["student_id"], name: "index_claims_on_student_id"
     t.index ["transaction_id"], name: "index_claims_on_transaction_id"
     t.index ["wallet_id"], name: "index_claims_on_wallet_id"
@@ -151,6 +159,12 @@ ActiveRecord::Schema.define(version: 20180119053211) do
     t.index ["reset_password_token"], name: "index_printers_on_reset_password_token", unique: true
   end
 
+  create_table "purchases", force: :cascade do |t|
+    t.integer "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "students", force: :cascade do |t|
     t.string "name", null: false
     t.string "email"
@@ -211,6 +225,7 @@ ActiveRecord::Schema.define(version: 20180119053211) do
     t.index ["student_id"], name: "index_wallets_on_student_id"
   end
 
+  add_foreign_key "claims", "purchases"
   add_foreign_key "claims", "transactions"
   add_foreign_key "claims", "wallets"
   add_foreign_key "courses", "teachers"

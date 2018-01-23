@@ -1,20 +1,20 @@
 module Client
-  module Claims
-    class Create < ::BaseService
-      ERROR_TITLE = 'Claim Error'.freeze
+  module Purchases
+    class Balance < ::BaseService
       attribute :params, Hash, writer: :private
-      attribute :student, Object, writer: :private
+      attribute :doc_id, Integer, writer: :private
 
-      def initialize(student, params = {})
+
+      def initialize(params = {})
         self.params = params
-        self.student = student
+        self.doc_id = params[:doc_id]
       end
 
       def call
-        params["wallet_id"] = student.wallet.id
-        claim = student.claims.create!(params)
-        balance = ::Client::Claims::Balance.call(student, params)
-
+        doc = ::Client::Docs::Find.call(doc_id)
+        
+        price = doc.response.price
+        balance =
         success claim
 
       rescue ActiveRecord::RecordInvalid => e
