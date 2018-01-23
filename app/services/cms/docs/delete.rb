@@ -10,7 +10,7 @@ module CMS
       end
 
       def call
-        result = ::CMS::Docs::Find.call(id)
+        result = ::Client::Docs::Find.call(id)
 
         return error(result) unless result.succeed?
 
