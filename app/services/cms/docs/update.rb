@@ -1,29 +1,50 @@
 module CMS
-  module Doc
+  module Docs
     class Update < ::BaseService
-      ERROR_TITLE = 'Doc Error'.freeze
+       attribute :id, Integer, writer: :private
+       attribute :document, Tempfile, writer: :private
+       attribute :params, Hash, writer: :private
 
-      attribute :id, Integer, writer: :private
+       ERROR_TITLE = 'Doc Error'.freeze
 
-      def initialize(params = {})
-        self.id = params[:id]
-        self.params = params.except(:id)
-      end
+       def initialize(options={})
+         self.id = options[:id]
+         self.document = options[:document]
+         self.params = options.except(:document)
+       end
 
-      def call
-        result = ::CMS::Docs::Find.call(id)
+       def call
+         doc = Doc.find(id)
+         return error(
+                        response: doc,
+                        title: ERROR_TITLE,
+                        code: 404,
+                        message: 'Doc not found'
+                      ) unless doc
+          doc_update = doc.update(params)
 
-        return error(result) unless result.succeed?
+          unless document.nil?
+            doc_open = ActionDispatch::Http::UploadedFile.new(document)
+            doc.update(document: doc_open)
+          end
 
-        success(
-          result.response.update!(params)
-        )
-      rescue ActiveRecord::RecordInvalid => e
-        return error(response: e.record, title: ERROR_TITLE, code: 422,
-                     message: 'Doc could not be updated', errors: e.record.errors)
-      rescue => e
-        return error(reponse: e, title: ERROR_TITLE, message: e.message, code: 422)
-      end
+          success(doc)
+
+       rescue ActiveRecord::RecordInvalid => e
+         return error(
+                        response: e.record,
+                        title: ERROR_TITLE, code: 422,
+                        message: 'Doc could not be added',
+                        errors: e.record.errors
+                      )
+       rescue => e
+         return error(
+                        response: e,
+                        title: ERROR_TITLE,
+                        message: e.message,
+                        code: 422
+                      )
+     end
     end
   end
 end

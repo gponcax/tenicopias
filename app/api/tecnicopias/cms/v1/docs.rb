@@ -28,14 +28,11 @@ module Tecnicopias
 
             desc 'Update Doc'
             params do
-              optional :name, allow_blank: false, type: String
-              optional :email, allow_blank: false, regexp: Devise::email_regexp, type: String
-              optional :password, allow_blank: false, type: String,
-                       documentation: { required: false, type: 'password' }
-              given :password do
-                requires :password_confirmation, allow_blank: false, type: String,
-                         documentation: { required: false, type: 'password' }
-              end
+              optional :name, allow_blank: true, type: String
+              optional :description, allow_blank: true, type: String
+              optional :price, allow_blank: true, type: Integer
+              optional :page_numbers, allow_blank: true, type: Integer
+              optional :document, allow_blank: true, type: File
             end
             put do
               status 204
