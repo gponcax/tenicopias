@@ -4,6 +4,7 @@
 
   has_one :wallet
 
+  has_many :purchases
   has_many :claims
   has_many :docs, through: :claims
 

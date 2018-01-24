@@ -23,8 +23,9 @@ module Tecnicopias
 
           post serializer: ::Client::Claims::ClaimSerializer do
             status 201
-    
+
             result = ::Client::Claims::Create.call(current_resource_owner, params)
+          
             if result.succeed?
               result.response
             else

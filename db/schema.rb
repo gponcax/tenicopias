@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180123054955) do
+ActiveRecord::Schema.define(version: 20180124082559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,14 +52,10 @@ ActiveRecord::Schema.define(version: 20180123054955) do
     t.boolean "printed", default: false
     t.boolean "delivered", default: false
     t.boolean "approved", default: false
-    t.bigint "wallet_id"
     t.bigint "transaction_id"
-    t.bigint "purchase_id"
     t.index ["doc_id"], name: "index_claims_on_doc_id"
-    t.index ["purchase_id"], name: "index_claims_on_purchase_id"
     t.index ["student_id"], name: "index_claims_on_student_id"
     t.index ["transaction_id"], name: "index_claims_on_transaction_id"
-    t.index ["wallet_id"], name: "index_claims_on_wallet_id"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -163,6 +159,12 @@ ActiveRecord::Schema.define(version: 20180123054955) do
     t.integer "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "doc_id"
+    t.bigint "student_id"
+    t.bigint "balance_id"
+    t.index ["balance_id"], name: "index_purchases_on_balance_id"
+    t.index ["doc_id"], name: "index_purchases_on_doc_id"
+    t.index ["student_id"], name: "index_purchases_on_student_id"
   end
 
   create_table "students", force: :cascade do |t|
@@ -225,15 +227,15 @@ ActiveRecord::Schema.define(version: 20180123054955) do
     t.index ["student_id"], name: "index_wallets_on_student_id"
   end
 
-  add_foreign_key "claims", "purchases"
   add_foreign_key "claims", "transactions"
-  add_foreign_key "claims", "wallets"
   add_foreign_key "courses", "teachers"
   add_foreign_key "docs", "courses"
   add_foreign_key "groups", "courses"
   add_foreign_key "groups", "students"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "purchases", "docs"
+  add_foreign_key "purchases", "students"
   add_foreign_key "transactions", "wallets"
   add_foreign_key "wallets", "students"
 end

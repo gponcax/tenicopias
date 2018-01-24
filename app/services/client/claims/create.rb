@@ -11,11 +11,18 @@ module Client
       end
 
       def call
-        params["wallet_id"] = student.wallet.id
         claim = student.claims.create!(params)
-        balance = ::Client::Claims::Balance.call(student, params)
 
-        success claim
+        if claim
+          balance = ::Client::Claims::Balance.call(student, claim.doc_id)
+          success(claim)
+        else
+          return error(
+                        title: ERROR_TITLE,
+                        code: 404,
+                        message: 'claim could not be created'
+                        )
+        end
 
       rescue ActiveRecord::RecordInvalid => e
         return error(response: e.record,
