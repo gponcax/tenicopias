@@ -3,43 +3,32 @@ module CMS
     class Update < ::BaseService
        attribute :id, Integer, writer: :private
        attribute :document, Tempfile, writer: :private
-       attribute :name, String, writer: :private
-       attribute :description, String, writer: :private
-       attribute :price, Integer, writer: :private
-       attribute :page_numbers, Integer, writer: :private
+       attribute :params, Hash, writer: :private
 
        ERROR_TITLE = 'Doc Error'.freeze
 
        def initialize(options={})
          self.id = options[:id]
          self.document = options[:document]
-         self.name = options[:name]
-         self.description = options[:description]
-         self.price = options[:price]
-         self.page_numbers = options[:page_numbers]
+         self.params = options.except(:document)
        end
 
        def call
-         course = Course.find(id)
+         doc = Doc.find(id)
          return error(
-                        response: course,
+                        response: doc,
                         title: ERROR_TITLE,
                         code: 404,
-                        message: 'Group not found'
-                      ) unless course
+                        message: 'Doc not found'
+                      ) unless doc
+          doc_update = doc.update(params)
 
-          doc_open = ActionDispatch::Http::UploadedFile.new(document)
-          doc = course.docs.create!(
-                                document: doc_open,
-                                mime_type: doc_open.content_type,
-                                file_size: doc_open.size,
-                                name: name,
-                                price: price,
-                                page_numbers: page_numbers,
-                                description: description)
+          unless document.nil?
+            doc_open = ActionDispatch::Http::UploadedFile.new(document)
+            doc.update(document: doc_open)
+          end
 
           success(doc)
-
 
        rescue ActiveRecord::RecordInvalid => e
          return error(

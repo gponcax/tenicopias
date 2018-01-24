@@ -28,11 +28,11 @@ module Tecnicopias
 
             desc 'Update Doc'
             params do
-              requires :name, allow_blank: true, type: String
-              requires :description, allow_blank: true, type: String
-              requires :price, allow_blank: true, type: Integer
-              requires :page_numbers, allow_blank: true, type: Integer
-              requires :document, allow_blank: true, type: File
+              optional :name, allow_blank: true, type: String
+              optional :description, allow_blank: true, type: String
+              optional :price, allow_blank: true, type: Integer
+              optional :page_numbers, allow_blank: true, type: Integer
+              optional :document, allow_blank: true, type: File
             end
             put do
               status 204
