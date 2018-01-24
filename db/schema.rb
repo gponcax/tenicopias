@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180124082559) do
+ActiveRecord::Schema.define(version: 20180124103303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -167,6 +167,19 @@ ActiveRecord::Schema.define(version: 20180124082559) do
     t.index ["student_id"], name: "index_purchases_on_student_id"
   end
 
+  create_table "statuses", force: :cascade do |t|
+    t.bigint "claim_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.string "scope"
+    t.boolean "denied"
+    t.boolean "printed"
+    t.boolean "delivered"
+    t.boolean "approved"
+    t.index ["claim_id"], name: "index_statuses_on_claim_id"
+  end
+
   create_table "students", force: :cascade do |t|
     t.string "name", null: false
     t.string "email"
@@ -236,6 +249,7 @@ ActiveRecord::Schema.define(version: 20180124082559) do
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "purchases", "docs"
   add_foreign_key "purchases", "students"
+  add_foreign_key "statuses", "claims"
   add_foreign_key "transactions", "wallets"
   add_foreign_key "wallets", "students"
 end

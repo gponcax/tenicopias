@@ -4,7 +4,7 @@ module Tecnicopias
       class Wallets < Base
         namespace :wallets do
           before do
-            doorkeeper_authorize! :admin
+            doorkeeper_authorize! :admin, :printer
           end
 
           desc 'Add Credit'

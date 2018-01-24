@@ -4,7 +4,7 @@ module Tecnicopias
       class Students < Base
         namespace :students do
           before do
-            doorkeeper_authorize! :admin
+            doorkeeper_authorize! :admin, :printer
           end
 
           desc 'Create Student'
