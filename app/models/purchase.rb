@@ -1,3 +1,3 @@
 class Purchase < ApplicationRecord
- has_many :claims
+  has_many :claims
 end
