@@ -2,7 +2,7 @@ module Client
   module Claims
     class ClaimSerializer < ActiveModel::Serializer
       attributes  :id,:document, :denied, :printed,
-                  :sent, :delivered, :approved
+                  :sent, :delivered, :approved, :token
       def document
         object.doc
       end
