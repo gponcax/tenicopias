@@ -4,22 +4,24 @@ module Client
       ERROR_TITLE = 'Claims Error'.freeze
 
       attribute :params,  ActionController::Parameters, writer: :private
+      attribute :user, Object, writer: :private
 
-      def initialize(params={})
+      def initialize(user, params={})
         self.params = params
+        self.user = user
       end
 
       def call
         if params[:denied]
-          claims = Claim.where(denied: params[:denied])
+          claims = user.claims.where(denied: params[:denied])
         elsif params[:printed]
-          claims = Claim.where(printed: params[:printed])
+          claims = user.claims.where(printed: params[:printed])
         elsif params[:delivered]
-          claims = Claim.where(delivered: params[:delivered])
+          claims = user.claims.where(delivered: params[:delivered])
         elsif params[:approved]
-          claims = Claim.where(approved: params[:approved])
+          claims = user.claims.where(approved: params[:approved])
         else
-          claims = Claim.where(sent: true)
+          claims = user.claims.where(sent: true)
         end
 
         return error(
