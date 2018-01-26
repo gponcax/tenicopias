@@ -18,6 +18,8 @@ module CMS
           claims = Claim.where(delivered: params[:delivered])
         elsif params[:approved]
           claims = Claim.where(approved: params[:approved])
+        else
+          claims = Claim.where(sent: true)
         end
 
         return error(
