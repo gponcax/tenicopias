@@ -10,10 +10,20 @@ module Tecnicopias
           desc 'Claim List'
           params do
             use :pagination
+            optional :denied, allow_blank: true, type: Boolean
+            optional :printed, allow_blank: true, type: Boolean
+            optional :delivered, allow_blank: true, type: Boolean
+            optional :approved, allow_blank: true, type: Boolean
           end
 
           get each_serializer: ::CMS::Claims::ClaimSerializer do
-            paginate  Claim.all.page(params[:page]).per(params[:per_page])
+            result = ::CMS::Filters::ClaimsByStatus.call(params)
+            if result.succeed?
+              paginate  result.response.page(params[:page]).per(params[:per_page])
+            else
+            error!({ message: result.message, errors: result.errors },
+                   result.code)
+            end
           end
 
           route_param :id, type: Integer, allow_blank: false, requirements: { id: /[0-9]*/ } do
