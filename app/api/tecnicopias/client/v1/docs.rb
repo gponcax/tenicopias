@@ -10,10 +10,19 @@ module Tecnicopias
           desc 'Docs List'
           params do
             use :pagination
+            optional :denied, allow_blank: true, type: Boolean
+            optional :printed, allow_blank: true, type: Boolean
+            optional :delivered, allow_blank: true, type: Boolean
+            optional :approved, allow_blank: true, type: Boolean
           end
 
           get each_serializer: ::Client::Docs::DocSerializer do
-            paginate  current_resource_owner.docs.page(params[:page]).per(params[:per_page])
+            result = ::Client::Filters::DocByStatus.call(current_resource_owner, params)
+            if result.succeed?
+              paginate  result.response.page(params[:page]).per(params[:per_page])
+            else
+              []
+            end
           end
         end
       end
