@@ -21,8 +21,7 @@ module Tecnicopias
             if result.succeed?
               paginate  result.response.page(params[:page]).per(params[:per_page])
             else
-            error!({ message: result.message, errors: result.errors },
-                   result.code)
+              []
             end
           end
 
