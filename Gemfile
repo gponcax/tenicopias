@@ -41,6 +41,7 @@ gem 'paperclip'
 gem "genderize"
 gem 'rails_12factor'
 gem 'money'
+gem 'ransack'
 
 
 group :development, :test do
