@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180124103303) do
+ActiveRecord::Schema.define(version: 20180126021119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20180124103303) do
     t.boolean "delivered", default: false
     t.boolean "approved", default: false
     t.bigint "transaction_id"
+    t.string "token"
     t.index ["doc_id"], name: "index_claims_on_doc_id"
     t.index ["student_id"], name: "index_claims_on_student_id"
     t.index ["transaction_id"], name: "index_claims_on_transaction_id"
