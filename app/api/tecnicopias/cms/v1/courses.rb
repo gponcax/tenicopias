@@ -16,11 +16,10 @@ module Tecnicopias
             paginate  Course.page(params[:page]).per(params[:per_page])
           end
 
-
           route_param :id, type: Integer, allow_blank: false, requirements: { id: /[0-9]*/ } do
             desc 'Course Detail'
             get serializer: ::CMS::Courses::CourseSerializer do
-              result = ::CMS::Courses::Find.call(params[:id])
+              result = ::CMS::Courses::Admins::Find.call(params[:id])
 
               if result.succeed?
                 result.response
@@ -36,7 +35,7 @@ module Tecnicopias
 
               desc 'Students'
               get serializer: ::CMS::Students::StudentSerializer do
-                result = ::CMS::Courses::FindStudents.call(params[:id])
+                result = ::CMS::Courses::Admins::FindStudents.call(params[:id])
 
                 if result.succeed?
                   paginate result.response
@@ -75,7 +74,7 @@ module Tecnicopias
                 use :pagination
               end
               get serializer: ::CMS::Docs::DocSerializer do
-                result = ::CMS::Courses::FindDocs.call(params[:id])
+                result = ::CMS::Courses::Admins::FindDocs.call(params[:id])
 
                 if result.succeed?
                   paginate result.response
