@@ -10,6 +10,8 @@ module Tecnicopias
           desc 'Create Teacher'
           params do
             requires :name, allow_blank: false, type: String
+            requires :carnet, allow_blank: false, type: String
+            requires :schools, allow_blank: false, type: String
             requires :email, allow_blank: false, regexp: Devise::email_regexp, type: String
             requires :phone, allow_blank: false, type: String
             optional :birthdate, allow_blank: false, type: Date
@@ -54,6 +56,8 @@ module Tecnicopias
             desc 'Update Teacher'
             params do
               optional :name, allow_blank: false, type: String
+              optional :carnet, allow_blank: false, type: String
+              optional :schools, allow_blank: false, type: String
               optional :email, allow_blank: false, regexp: Devise::email_regexp, type: String
               optional :phone, allow_blank: false, type: String
               optional :birthdate, allow_blank: false, type: Date
