@@ -77,6 +77,25 @@ module Tecnicopias
                      result.code) unless result.succeed?
             end
 
+            namespace :courses do
+              desc 'Create course'
+              params do
+                requires :name, allow_blank: false, type: String
+                requires :description, allow_blank: false, type: String
+                requires :start_time, allow_blank: false, type: String
+                requires :end_time, allow_blank: false, type: String
+              end
+              post serializer: ::CMS::Courses::CourseSerializer do
+                result = ::CMS::Courses::Create.call(params)
+                if result.succeed?
+                  result.response
+                else
+                error!({ message: result.message, errors: result.errors },
+                       result.code)
+                end
+              end
+            end
+
             desc 'Delete Teacher'
             delete do
               status 204

@@ -16,6 +16,7 @@ module Tecnicopias
             paginate  Course.page(params[:page]).per(params[:per_page])
           end
 
+
           route_param :id, type: Integer, allow_blank: false, requirements: { id: /[0-9]*/ } do
             desc 'Course Detail'
             get serializer: ::CMS::Courses::CourseSerializer do
