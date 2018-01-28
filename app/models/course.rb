@@ -1,7 +1,8 @@
 class Course < ApplicationRecord
-  has_many :docs
   belongs_to :teacher
+  belongs_to :school
 
+  has_many :docs
   has_many :groups
   has_many :students, through: :groups
 end

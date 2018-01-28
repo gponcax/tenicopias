@@ -29,7 +29,8 @@ module Tecnicopias
                                       name: 'Authorization',
                                       in: 'header'
                                     }
-                                  }
+                                  },
+                                  info: { title: 'Api for CMS' }
       end
     end
   end

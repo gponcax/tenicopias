@@ -23,7 +23,8 @@ module Tecnicopias
                                       name: 'Authorization',
                                       in: 'header'
                                     }
-                                  }
+                                  },
+                                  info: { title: 'Api for Client' }
       end
     end
   end
