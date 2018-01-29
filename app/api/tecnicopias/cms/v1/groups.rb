@@ -2,39 +2,22 @@ module Tecnicopias
   module CMS
     module V1
       class Groups < Base
-        namespace :groups do
+        namespace :ciclos do
           before do
             doorkeeper_authorize! :admin
           end
 
-          desc 'Group List'
+          desc 'Ciclo List'
           params do
             use :pagination
           end
 
           get each_serializer: ::CMS::Groups::GroupSerializer do
-            paginate  Group.page(params[:page]).per(params[:per_page])
+            paginate  Group.all.page(params[:page]).per(params[:per_page])
           end
 
-
-          desc 'Create Group'
-          params do
-            requires :name, allow_blank: false, type: String
-            requires :description, allow_blank: false, type: String
-          end
-          post serializer: ::CMS::Groups::GroupSerializer do
-            status 201
-
-            result = ::CMS::Groups::Create.call(params)
-
-            if result.succeed?
-              result.response
-            else
-              error!({ message: result.message, errors: result.errors }, result.code)
-            end
-          end
           route_param :id, type: Integer, allow_blank: false, requirements: { id: /[0-9]*/ } do
-            desc 'Group Detail'
+            desc 'Ciclo Detail'
             get serializer: ::CMS::Groups::GroupSerializer do
               result = ::CMS::Groups::Find.call(params[:id])
 
@@ -45,10 +28,29 @@ module Tecnicopias
               end
             end
 
-            desc 'Update Group'
+           namespace :courses do
+             desc 'Create Course'
+             params do
+               requires :name, allow_blank: false, type: String
+               requires :description, allow_blank: false, type: String
+             end
+             post serializer: ::CMS::Courses::CourseSerializer do
+               status 201
+
+               result = ::CMS::Courses::Admins::Create.call(params)
+
+               if result.succeed?
+                 result.response
+               else
+                 error!({ message: result.message, errors: result.errors }, result.code)
+               end
+             end
+           end
+
+            desc 'Update Ciclo'
             params do
-              requires :name, allow_blank: false, type: String
-              requires :description, allow_blank: false, type: String
+              optional :name, allow_blank: false, type: String
+              optional :description, allow_blank: false, type: String
             end
             put do
               status 204
@@ -59,7 +61,7 @@ module Tecnicopias
                      result.code) unless result.succeed?
             end
 
-            desc 'Delete Group'
+            desc 'Delete Ciclo'
             delete do
               status 204
 

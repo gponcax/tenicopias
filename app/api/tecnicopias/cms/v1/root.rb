@@ -8,11 +8,12 @@ module Tecnicopias
         helpers Doorkeeper::Grape::Helpers, CurrentResourceOwnerHelper
 
         mount ::Tecnicopias::CMS::V1::Admins
+        mount ::Tecnicopias::CMS::V1::Schools
         mount ::Tecnicopias::CMS::V1::Teachers
         mount ::Tecnicopias::CMS::V1::Students
         mount ::Tecnicopias::CMS::V1::Oauth
         mount ::Tecnicopias::CMS::V1::Printers
-        # mount ::Tecnicopias::CMS::V1::Groups
+        mount ::Tecnicopias::CMS::V1::Groups
         mount ::Tecnicopias::CMS::V1::Docs
         mount ::Tecnicopias::CMS::V1::Courses
         mount ::Tecnicopias::CMS::V1::Me
@@ -29,7 +30,8 @@ module Tecnicopias
                                       name: 'Authorization',
                                       in: 'header'
                                     }
-                                  }
+                                  },
+                                  info: { title: 'Api for CMS' }
       end
     end
   end

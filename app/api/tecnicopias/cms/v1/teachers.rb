@@ -2,6 +2,53 @@ module Tecnicopias
   module CMS
     module V1
       class Teachers < Base
+
+        namespace :teacher_courses do
+          before do
+            doorkeeper_authorize! :teacher
+          end
+
+          desc 'Create course from the teacher'
+          params do
+            requires :name, allow_blank: false, type: String
+            requires :description, allow_blank: false, type: String
+            requires :start_time, allow_blank: false, type: String
+            requires :end_time, allow_blank: false, type: String
+          end
+
+          post serializer: ::CMS::Courses::CourseSerializer do
+            result = ::CMS::Courses::Teachers::Create.call(current_resource_owner, params)
+            if result.succeed?
+              result.response
+            else
+            error!({ message: result.message, errors: result.errors },
+                   result.code)
+            end
+          end
+
+          desc 'Courses List from the teacher'
+          params do
+            use :pagination
+          end
+          get each_serializer: ::CMS::Courses::CourseSerializer do
+            paginate current_resource_owner.courses.page(params[:page]).per(params[:per_page])
+          end
+
+          route_param :id, type: Integer, allow_blank: false do
+            desc 'Teacher Detail from the teache'
+            get serializer: ::CMS::Courses::CourseSerializer do
+              result = ::CMS::Courses::Teachers::Find.call(current_resource_owner, params[:id])
+
+              if result.succeed?
+                result.response
+              else
+                error!({ message: result.message, errors: result.errors }, result.code)
+              end
+            end
+          end
+
+        end
+
         namespace :teachers do
           before do
             doorkeeper_authorize! :admin
@@ -9,7 +56,9 @@ module Tecnicopias
 
           desc 'Create Teacher'
           params do
+            requires :career_id, allow_blank: false, type: Integer
             requires :name, allow_blank: false, type: String
+            requires :carnet, allow_blank: false, type: String
             requires :email, allow_blank: false, regexp: Devise::email_regexp, type: String
             requires :phone, allow_blank: false, type: String
             optional :birthdate, allow_blank: false, type: Date
@@ -54,6 +103,8 @@ module Tecnicopias
             desc 'Update Teacher'
             params do
               optional :name, allow_blank: false, type: String
+              optional :carnet, allow_blank: false, type: String
+              optional :schools, allow_blank: false, type: String
               optional :email, allow_blank: false, regexp: Devise::email_regexp, type: String
               optional :phone, allow_blank: false, type: String
               optional :birthdate, allow_blank: false, type: Date
@@ -71,6 +122,24 @@ module Tecnicopias
 
               error!({ message: result.message, errors: result.errors },
                      result.code) unless result.succeed?
+            end
+
+            namespace :study_class do
+              desc 'Create Study Class'
+              params do
+                requires :course_id, allow_blank: false, type: Integer
+                requires :start_time, allow_blank: false, type: String
+                requires :end_time, allow_blank: false, type: String
+              end
+              post serializer: ::CMS::StudyClasses::StudyClassSerializer do
+                result = ::CMS::StudyClasses::Admins::Create.call(params)
+                if result.succeed?
+                  result.response
+                else
+                error!({ message: result.message, errors: result.errors },
+                       result.code)
+                end
+              end
             end
 
             desc 'Delete Teacher'

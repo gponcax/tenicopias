@@ -86,7 +86,8 @@ student1= Student.create!({
                     password: 'welcome123',
                     birthdate: Faker::Date.birthday(18, 65),
                     gender: Faker::Boolean.boolean(0.2),
-                    avatar: Faker::Avatar.image("my-own-slug", "50x50") #=> "https://robohash.org/my-own-slug.png?size=50x50"
+                    avatar: Faker::Avatar.image("my-own-slug", "50x50"),
+                    school_id: 1
                   })
 
 puts "===========STUDENT1=========="
@@ -120,6 +121,18 @@ student3= Student.create!({
 
 puts "===========student3=========="
 puts student3
+
+school = School.create(name: "Ing. Sistemas", date: Date.now)
+
+school.groups.create!({
+          name: Faker::Educator.course,
+          description: Faker::Educator.campus,
+          year: Time.now.year,
+          semester: 1
+          })
+
+
+
 
 puts "===========GROUPS============"
 group1 = student1.groups.create!({
