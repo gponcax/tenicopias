@@ -1,9 +1,7 @@
 module CMS
-  module Courses
+  module StudyClasses
     module Teachers
       class Create < ::BaseService
-        ERROR_TITLE = 'Course Error'.freeze
-
         attribute :params, Hash, writer: :private
         attribute :user, Object, writer: :private
 
@@ -13,18 +11,16 @@ module CMS
         end
 
         def call
-          binding.pry
           course = user.course_classes.create!(params)
-
           success course
         rescue ActiveRecord::RecordInvalid => e
           return error( response: e.record,
-                        title: ERROR_TITLE, code: 422,
+                        title: "Study Claasses", code: 422,
                         message: 'Course could not be created',
                         errors: e.record.errors)
         rescue => e
           return error(reponse: e,
-                      title: ERROR_TITLE,
+                      title: "Study Claasses",
                       message: e.message,
                       code: 422)
         end

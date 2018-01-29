@@ -1,5 +1,5 @@
 module CMS
-  module Courses
+  module StudyClasses
     module Admins
       class Delete < ::BaseService
         ERROR_TITLE = 'Printer Error'.freeze

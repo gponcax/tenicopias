@@ -1,7 +1,7 @@
 module CMS
   module Claims
     class ChangeStatus < ::BaseService
-      ERROR_TITLE = 'Course Error'.freeze
+
 
       attribute :id, Integer, writer: :private
       attribute :params, Hash, writer: :private
@@ -33,7 +33,7 @@ module CMS
                                       )
       end
         return error(
-          title: ERROR_TITLE,
+          title: "Claim Error",
           code: 404,
           message: 'Claim not found'
         ) unless claim
@@ -43,14 +43,14 @@ module CMS
        rescue ActiveRecord::RecordInvalid => e
          return error(
                         response: e.record,
-                        title: ERROR_TITLE, code: 422,
+                        title: "Claim Error", code: 422,
                         message: 'Doc could not be added',
                         errors: e.record.errors
                       )
        rescue => e
          return error(
                         response: e,
-                        title: ERROR_TITLE,
+                        title: "Claim Error",
                         message: e.message,
                         code: 422
                       )

@@ -1,5 +1,5 @@
 module CMS
-  module Courses
+  module StudyClasses
     module Teachers
       class Find < ::BaseService
         ERROR_TITLE = 'Course Error'.freeze

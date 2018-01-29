@@ -42,7 +42,8 @@ gem "genderize"
 gem 'rails_12factor'
 gem 'money'
 gem 'ransack'
-
+gem 'pry'
+gem 'pry-rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

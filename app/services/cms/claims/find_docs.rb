@@ -1,7 +1,7 @@
 module CMS
   module Claims
     class FindDocs < ::BaseService
-      ERROR_TITLE = 'Course Error'.freeze
+
 
       attribute :id, Integer, writer: :private
 
@@ -13,7 +13,7 @@ module CMS
         course = Course.find(id)
         docs = course.docs
         return error(
-          title: ERROR_TITLE,
+          title:  "Claim Error",
           code: 404,
           message: 'Course not found'
         ) unless docs

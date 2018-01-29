@@ -1,7 +1,6 @@
 module CMS
   module Admins
     class Find < ::BaseService
-      ERROR_TITLE = 'Admin Error'.freeze
 
       attribute :id, Integer, writer: :private
 
@@ -13,14 +12,14 @@ module CMS
         admin = Admin.find_by(id: id)
 
         return error(
-          title: ERROR_TITLE,
+          title: 'Admin Error',
           code: 404,
           message: 'Admin not found'
         ) unless admin
 
         success(admin)
       rescue => e
-        return error(reponse: e, title: ERROR_TITLE, message: e.message, code: 422)
+        return error(reponse: e, title: 'Admin Error', message: e.message, code: 422)
       end
     end
   end

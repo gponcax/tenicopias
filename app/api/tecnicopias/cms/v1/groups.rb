@@ -37,10 +37,21 @@ module Tecnicopias
              post serializer: ::CMS::Courses::CourseSerializer do
                status 201
 
-               result = ::CMS::Courses::Admins::Create.call(params)
+               result = ::CMS::Courses::Create.call(params)
 
                if result.succeed?
                  result.response
+               else
+                 error!({ message: result.message, errors: result.errors }, result.code)
+               end
+             end
+             desc 'Courses by Ciclo'
+             get serializer: ::CMS::Courses::CourseSerializer do
+               result = ::CMS::Groups::Find.call(params[:id])
+
+               if result.succeed?
+          
+                 result.response.courses
                else
                  error!({ message: result.message, errors: result.errors }, result.code)
                end

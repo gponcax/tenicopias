@@ -1,7 +1,6 @@
 module CMS
   module Admins
     class Delete < ::BaseService
-      ERROR_TITLE = 'Admin Error'.freeze
 
       attribute :id, Integer, writer: :private
 
@@ -18,10 +17,10 @@ module CMS
           result.response.destroy!
         )
       rescue ActiveRecord::RecordInvalid => e
-        return error(response: e.record, title: ERROR_TITLE, code: 422,
+        return error(response: e.record, title: "Admin Error", code: 422,
                      message: 'Admin could not be deleted', errors: e.record.errors)
       rescue => e
-        return error(reponse: e, title: ERROR_TITLE, message: e.message, code: 422)
+        return error(reponse: e, title: "Admin Error", message: e.message, code: 422)
       end
     end
   end

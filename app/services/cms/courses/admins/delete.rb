@@ -2,7 +2,6 @@ module CMS
   module Courses
     module Admins
       class Delete < ::BaseService
-        ERROR_TITLE = 'Printer Error'.freeze
 
         attribute :id, Integer, writer: :private
 
@@ -19,10 +18,10 @@ module CMS
             result.response.destroy!
           )
         rescue ActiveRecord::RecordInvalid => e
-          return error(response: e.record, title: ERROR_TITLE, code: 422,
+          return error(response: e.record, title: "Printer Error", code: 422,
                        message: 'Course could not be deleted', errors: e.record.errors)
         rescue => e
-          return error(reponse: e, title: ERROR_TITLE, message: e.message, code: 422)
+          return error(reponse: e, title: "Printer Error", message: e.message, code: 422)
         end
       end
     end

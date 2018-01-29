@@ -1,5 +1,5 @@
 module CMS
-  module Courses
+  module StudyClasses
     module Admins
       class Update < ::BaseService
         ERROR_TITLE = 'Courses Error'.freeze

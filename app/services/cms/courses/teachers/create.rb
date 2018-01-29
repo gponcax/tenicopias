@@ -13,7 +13,7 @@ module CMS
         end
 
         def call
-          binding.pry
+          
           course = user.course_classes.create!(params)
 
           success course

@@ -14,6 +14,7 @@ module CMS
 
         def call
           teacher = ::CMS::Teachers::Find.call(id)
+  
           if teacher.succeed?
             course = teacher.response.course_classes.create!(params)
           else

@@ -2,23 +2,23 @@ module CMS
   module Courses
     module Admins
       class Create < ::BaseService
-        ERROR_TITLE = 'Course Error'.freeze
 
-        attribute :params, Hash, writer: :private
+        attribute :att, Hash, writer: :private
         attribute :id, Integer, writer: :private
 
         def initialize(params = {})
-          self.params = params.except(:id)
+          self.att = params.except(:id)
           self.id = params['id']
         end
 
         def call
-          group = ::CMS::Groups::Find.call(id)
+          
+          group = Group.find_by!(id: id)
           if group.succeed?
-            course = group.response.courses.create!(params)
+            course = group.courses.create!(params)
           else
           return error(
-            title: ERROR_TITLE,
+            title: 'Course Error',
             code: 404,
             message: 'Group not found'  )
           end
@@ -26,12 +26,12 @@ module CMS
           success course
         rescue ActiveRecord::RecordInvalid => e
           return error( response: e.record,
-                        title: ERROR_TITLE, code: 422,
+                        title: 'Course Error', code: 422,
                         message: 'Course could not be created',
                         errors: e.record.errors)
         rescue => e
           return error(reponse: e,
-                      title: ERROR_TITLE,
+                      title: 'Course Error',
                       message: e.message,
                       code: 422)
         end
