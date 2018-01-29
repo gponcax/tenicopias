@@ -1,20 +1,27 @@
 module CMS
-  module Courses
-    module Teachers
+  module StudyClasses
+    module Admins
       class Create < ::BaseService
         ERROR_TITLE = 'Course Error'.freeze
 
         attribute :params, Hash, writer: :private
-        attribute :user, Object, writer: :private
+        attribute :id, Integer, writer: :private
 
-        def initialize(user, params = {})
+        def initialize(params = {})
           self.params = params.except(:id)
-          self.user = user
+          self.id = params['id']
         end
 
         def call
-          binding.pry
-          course = user.course_classes.create!(params)
+          teacher = ::CMS::Teachers::Find.call(id)
+          if teacher.succeed?
+            course = teacher.response.course_classes.create!(params)
+          else
+          return error(
+            title: ERROR_TITLE,
+            code: 404,
+            message: 'Group not found'  )
+          end
 
           success course
         rescue ActiveRecord::RecordInvalid => e

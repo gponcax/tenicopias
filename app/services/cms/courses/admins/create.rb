@@ -13,16 +13,14 @@ module CMS
         end
 
         def call
-
-          teacher = ::CMS::Teachers::Find.call(id)
-
-          if teacher.succeed?
-            course = teacher.response.courses.create!(params)
+          group = ::CMS::Groups::Find.call(id)
+          if group.succeed?
+            course = group.response.courses.create!(params)
           else
           return error(
             title: ERROR_TITLE,
             code: 404,
-            message: 'Teacher not found'  )
+            message: 'Group not found'  )
           end
 
           success course

@@ -49,7 +49,6 @@ module Tecnicopias
 
         end
 
-
         namespace :teachers do
           before do
             doorkeeper_authorize! :admin
@@ -57,9 +56,9 @@ module Tecnicopias
 
           desc 'Create Teacher'
           params do
+            requires :career_id, allow_blank: false, type: Integer
             requires :name, allow_blank: false, type: String
             requires :carnet, allow_blank: false, type: String
-            requires :schools, allow_blank: false, type: String
             requires :email, allow_blank: false, regexp: Devise::email_regexp, type: String
             requires :phone, allow_blank: false, type: String
             optional :birthdate, allow_blank: false, type: Date
@@ -125,16 +124,15 @@ module Tecnicopias
                      result.code) unless result.succeed?
             end
 
-            namespace :courses do
-              desc 'Create course'
+            namespace :study_class do
+              desc 'Create Study Class'
               params do
-                requires :name, allow_blank: false, type: String
-                requires :description, allow_blank: false, type: String
+                requires :course_id, allow_blank: false, type: Integer
                 requires :start_time, allow_blank: false, type: String
                 requires :end_time, allow_blank: false, type: String
               end
-              post serializer: ::CMS::Courses::CourseSerializer do
-                result = ::CMS::Courses::Create.call(params)
+              post serializer: ::CMS::StudyClasses::StudyClassSerializer do
+                result = ::CMS::StudyClasses::Admins::Create.call(params)
                 if result.succeed?
                   result.response
                 else
