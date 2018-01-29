@@ -9,7 +9,8 @@ namespace :setup do
                     email: 'admintest@test.com',
                     phone: Faker::PhoneNumber.phone_number,
                     password: 'welcome123'
-                  })?
+                  })
     end
+    
   end
 end
